@@ -7,6 +7,6 @@ describe 'Edge', ->
 
     it 'has an id', (done) -> 
 
-        edge.id().should.equal 'EDGE_ID'
+        edge.localId().should.equal 'LOCAL_ID'
         done()
 

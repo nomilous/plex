@@ -6,7 +6,14 @@ class Edge
     
     constructor: (opts = {}) ->
 
-    id: -> 'EDGE_ID'
+    #
+    # edge defines localId()
+    # 
+    # - MUST be unique among all 
+    #   locally attached edges 
+    #
+
+    localId: -> 'LOCAL_ID'
 
 
 module.exports = Edge
