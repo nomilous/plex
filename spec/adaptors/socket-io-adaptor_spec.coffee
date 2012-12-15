@@ -16,7 +16,7 @@ describe 'SocketIoAdaptor', ->
 
     describe 'listening', -> 
 
-        client  = require 'socket.io-client'
+        ioClient  = require 'socket.io-client'
         adaptor = undefined
         port    = 3000
 
@@ -40,6 +40,19 @@ describe 'SocketIoAdaptor', ->
             # adaptor.close()
 
 
-        xit 'calls back with newEdge', (done) -> 
+        it 'calls back with newEdge', (done) -> 
 
-            
+            client = ioClient.connect "http://localhost:#{  port  }"
+
+            client.on 'connect', => 
+
+                #
+                # serverside callback populated @edge
+                # 
+
+                serversideID = @edge.localId()
+                clientsideID = client.socket.sessionid
+
+                serversideID.should.equal clientsideID
+                done()
+                

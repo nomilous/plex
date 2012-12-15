@@ -10,7 +10,8 @@
     }
   ],
   "dependencies": {
-    "socket.io": "~0.9.13"
+    "socket.io": "~0.9.13",
+    "socket.io-client": "~0.9.11"
   },
   "devDependencies": {
     "hound": "~1.0.4",
