@@ -2,9 +2,13 @@ child_process = require 'child_process'
 hound = require 'hound'
 
 build = (after) ->
-    console.log "build"
     coffeeOpts = ['-c', '-b', '-o', "lib", "src"]
     coffee = child_process.spawn './node_modules/.bin/coffee', coffeeOpts
+
+    #
+    # TODO: fix: build may not finish before spec runs in after()
+    #
+
     coffee.stdout.pipe process.stdout
     coffee.stderr.pipe process.stderr
     after()
@@ -17,13 +21,14 @@ runSpec = (fileOrFolder) ->
   test_runner.stderr.pipe process.stderr
 
 specOrSrc = (file) ->
-  console.log file
+  console.log 'CHANGED:', file
   match = file.match /(src|spec)\/(.+)(_spec)?.coffee/
   if match[1] == 'src'
     #
     # changed src/ file
     #
     build ->
+      # after()
       specFile = 'spec/' + match[2] + '_spec.coffee'
       runSpec specFile
   else
