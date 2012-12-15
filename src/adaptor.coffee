@@ -11,14 +11,18 @@ class Adaptor
     # Note: This literal demonstrates the 
     #       behaviour that plex expects of
     #       an Adaptor
-    #      
-    
-    @listen: ( opts, onConnect ) -> 
+    #    
 
+    @validate: (opts, onConnect) -> 
 
         throw 'undefined opts' unless opts
         throw 'undefined onConnect(newEdge) callback' unless onConnect
         throw 'expected onConnect(newEdge) with 1 arg' unless onConnect.length == 1
+    
+    @listen: ( opts, onConnect ) -> 
+
+        @validate opts, onConnect
+        
 
         #
         # listen for connecting 'clients'
