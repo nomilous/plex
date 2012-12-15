@@ -43,3 +43,10 @@ describe 'Adaptor', ->
 
             error.should.match /with 1 arg/
             done()
+
+    it 'calls back when a new edge connects', (done) -> 
+
+        Adaptor.listen {}, (newEdge) -> 
+
+            newEdge.localId().should.equal 'LOCAL_ID'
+            done()

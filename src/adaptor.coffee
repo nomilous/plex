@@ -25,8 +25,14 @@ class Adaptor
         #
 
         #
-        # pretend one connected
+        # pretend one connected and call-it-back with onConnect(newEdge)
         #
+
+        newEdge = new (require './edge')  # nice... :) 
+                                          # 
+                                          # require keeps impressing me
+                                          # 
+        onConnect newEdge
 
 
 module.exports = Adaptor
