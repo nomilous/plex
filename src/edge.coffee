@@ -1,7 +1,13 @@
 class Edge
 
     #
-    # base class / interface for an edge
+    # Base class / interface for an edge
+    # 
+    # - Represents a connection to another node
+    # 
+    # - Defines the abstraction necessary to
+    #   support multiple transport types in
+    #   the proxy tree.
     # 
     
     constructor: (opts = {}) ->
