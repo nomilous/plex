@@ -1,0 +1,30 @@
+{
+  "name": "plex",
+  "description": "n-tier proxy tree",
+  "version": "0.0.0",
+  "author": "nomilous <nomilous@gmail.com>",
+  "contributors": [
+    {
+      "name": "nomilous",
+      "email": "nomilous@gmail.com"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "hound": "~1.0.4",
+    "mocha": "~1.7.4",
+    "coffee-script": "~1.4.0",
+    "should": "~1.2.1"
+  },
+  "keywords": [
+    "proxy",
+    "tree"
+  ],
+  "repository": "git@github.com:nomilous/plex.git",
+  "main": "./lib/plex",
+  "bin": {},
+  "scripts": {},
+  "engines": {
+    "node": "*"
+  }
+}
