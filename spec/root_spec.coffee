@@ -7,3 +7,10 @@ describe 'root', ->
 
         root.start.should.be.an.instanceof Function
         done()
+
+    it 'maintaines a list of connected edges', (done) ->
+
+        root.edges.should.eql {}
+        done()
+
+    
