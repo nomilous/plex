@@ -20,3 +20,4 @@ describe 'SocketIoEdge', ->
 
         @edge.localId().should.equal 'socket.io.id'
         done()
+    
