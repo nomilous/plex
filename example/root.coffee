@@ -3,6 +3,18 @@ plex = require '../lib/plex'
 plex.start
 
     mode: 'root'
-    adaptor: 'socket.io'
-    port: 3000
+    listen:
+        adaptor: 'socket.io'
+        port: 3000
+        onListen: (adaptor) ->
+
+
+            console.log "ROOT listening:", adaptor
+        
+
+        onConnect: (edge) ->
+            
+
+            console.log "ROOT got connection with id = %s", edge.localId()
+
 

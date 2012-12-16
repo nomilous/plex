@@ -13,7 +13,7 @@ describe 'plex', ->
             error.should.match /plex requires mode/
             done()
 
-    it 'throws if opts.adaptor is undefined', (done) -> 
+    it 'throws if opts.listen.adaptor is undefined', (done) -> 
 
         try 
             plex.start
@@ -21,18 +21,5 @@ describe 'plex', ->
 
         catch error
 
-            error.should.match /plex requires adaptor/
+            error.should.match /plex requires listen.adaptor/
             done()
-
-    it 'throws if opts.port is undefined', (done) ->
-
-        try 
-            plex.start
-                mode: 'root'
-                adaptor: 'socket.io'
-
-        catch error
-
-            error.should.match /requires opts.port/
-            done()
-

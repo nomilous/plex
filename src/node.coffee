@@ -9,15 +9,15 @@ class Base
 
     @start: (opts = {}) -> 
 
-        adaptor = opts.adaptor || 'socket.io'
-        port = process.env.PORT || opts.port || 3001
+        adaptor = opts.listen.adaptor || 'socket.io'
+        port = process.env.PORT || opts.listen.port || 3001
 
         switch adaptor
 
             when 'socket.io'
 
                 server = require "./adaptors/#{ adaptor }-adaptor"
-                server.listen opts, @connect
+                server.listen opts.listen, @connect
 
             else throw "adaptor not implemented: #{adaptor}"
 

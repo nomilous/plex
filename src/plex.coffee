@@ -7,17 +7,17 @@ plex =
         unless opts.mode
             throw "plex requires mode: 'root|proxy|leaf'" 
 
-        unless opts.adaptor
-            throw "plex requires adaptor: '#{ plex.supportedAdaptors }'" 
+        unless opts.listen and opts.listen.adaptor
+            throw "plex requires listen.adaptor: '#{ plex.supportedAdaptors }'" 
 
 
-        if opts.adaptor == 'socket.io'
+        if opts.listen.adaptor == 'socket.io'
 
             if opts.mode == 'root' or opts.mode == 'proxy'
 
-                unless opts.port
+                unless opts.listen.port
                 
-                    throw 'plex root|proxy with socket.io requires opts.port'
+                    throw 'plex root|proxy with socket.io requires opts.listen.port'
 
         server = require "./#{  opts.mode  }"
 

@@ -11,7 +11,11 @@ class SocketIoAdaptor
 
         throw 'undefined opts.port' unless opts.port
 
-        server = io.listen opts.port
+        _adaptor = this
+
+        server = io.listen opts.port, ->
+
+            opts.onListen _adaptor if opts.onListen
 
         server.on 'connection', (socket) -> 
 
@@ -20,9 +24,12 @@ class SocketIoAdaptor
             # and callback
             # 
 
-            onConnect new SocketIoEdge socket
+            edge = new SocketIoEdge socket
+
+            opts.onConnect edge if opts.onConnect
+
+            onConnect edge
 
         return server
-
 
 module.exports = SocketIoAdaptor

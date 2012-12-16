@@ -18,11 +18,9 @@ class Proxy extends Node
 
         @parent.connect =>
 
-            if opts.connect.callback
+            if opts.connect.onConnect
 
-                opts.connect.callback this
-
-            console.log "PROXY connected", localId: @parent.localId()
+                opts.connect.onConnect @parent
 
 
 module.exports = Proxy

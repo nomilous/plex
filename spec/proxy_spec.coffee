@@ -40,7 +40,7 @@ describe 'proxy', ->
                 connect:
                     adaptor: 'socket.io'
                     uri: "http://localhost:3000"
-                    callback: (connected) ->
+                    onConnect: (connected) ->
                         done() 
 
             

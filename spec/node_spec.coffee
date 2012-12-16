@@ -33,7 +33,7 @@ describe 'Node', ->
     it 'throws on unimplemented adaptor type', (done) -> 
 
         try 
-            Node.start adaptor: 'celtic lantern morse'
+            Node.start listen: adaptor: 'celtic lantern morse'
 
         catch error
 
