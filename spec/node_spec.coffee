@@ -12,7 +12,7 @@ describe 'Node', ->
     it 'maintaines a list of connected edges keyed on edge.id()', (done) ->
 
         Node.connect new Edge()
-        Node.edges.should.eql 'LOCAL_ID': {}
+        Node.edges.LOCAL_ID.should.not.be.undefined
         done()
 
     it 'marks edges as disconnected', (done) ->

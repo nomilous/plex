@@ -50,3 +50,7 @@ task 'dev', "Continuous test code changes", ->
 
 task 'spec', "Run all tests", ->
   runSpec 'spec'
+
+
+task 'build', "Build all", ->
+  build ->

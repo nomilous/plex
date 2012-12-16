@@ -29,14 +29,17 @@ describe 'Edge', ->
 
     it 'sends registration when connecting as client', (done) -> 
 
-        edge = new Edge()
-        edge.connect
+        edge = new Edge null,
+            mode: 'proxy'
             connect: {}
+
+        edge.connect()
+            
 
         edge.sentAmessage.should.eql
             event: 'event:register'
             payload:
-                type: 'pending'
+                type: 'proxy'
                 globalId: @globalid
 
         done()

@@ -1,4 +1,4 @@
-class Base
+class Node
 
     #
     # Maintain a list of 'entities' attached
@@ -17,7 +17,7 @@ class Base
             when 'socket.io'
 
                 server = require "./adaptors/#{ adaptor }-adaptor"
-                server.listen opts.listen, @connect
+                server.listen opts, @connect
 
             else throw "adaptor not implemented: #{adaptor}"
 
@@ -43,4 +43,4 @@ class Base
             timestamp: new Date()
 
 
-module.exports = Base
+module.exports = Node

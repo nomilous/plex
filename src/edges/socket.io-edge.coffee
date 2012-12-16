@@ -9,6 +9,8 @@ class SocketIoEdge extends Edge
         # nothing to do if socket is defined
         #
 
+        console.log 'INIT Edge with opts:', opts
+
         @isClient = false
 
         if @connection

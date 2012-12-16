@@ -19,9 +19,9 @@ class Adaptor
         throw 'undefined onConnect(newEdge) callback' unless onConnect
         throw 'expected onConnect(newEdge) with 1 arg' unless onConnect.length == 1
     
-    @listen: ( opts, onConnect ) -> 
+    @listen: ( @opts, onConnect ) -> 
 
-        @validate opts, onConnect
+        @validate @opts, onConnect
         
 
         #

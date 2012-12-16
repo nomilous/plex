@@ -5,15 +5,17 @@ SocketIoEdge = require '../edges/socket.io-edge'
 
 class SocketIoAdaptor
 
-    @listen: ( opts, onConnect ) ->
+    @listen: ( @opts, onConnect ) ->
 
-        Adaptor.validate opts, onConnect
+        Adaptor.validate @opts, onConnect
 
-        throw 'undefined opts.port' unless opts.port
+        unless @opts.listen and @opts.listen.port
+
+            throw 'undefined opts.port' 
 
         _adaptor = this
 
-        server = io.listen opts.port, ->
+        server = io.listen opts.listen.port, ->
 
             opts.onListen _adaptor if opts.onListen
 
@@ -24,7 +26,7 @@ class SocketIoAdaptor
             # and callback
             # 
 
-            edge = new SocketIoEdge socket
+            edge = new SocketIoEdge socket, opts
 
             opts.onConnect edge if opts.onConnect
 

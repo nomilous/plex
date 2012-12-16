@@ -62,6 +62,7 @@ describe 'SocketIoEdge', ->
         it 'connects to the server using opts.connect if connected is null', (done) ->
 
             edge = new SocketIoEdge null,
+                mode: 'proxy'
                 connect: 
                     uri: "http://localhost:#{  port  }"
 

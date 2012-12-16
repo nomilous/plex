@@ -25,8 +25,9 @@ describe 'SocketIoAdaptor', ->
             @edge = undefined
 
             adaptor = SocketIoAdaptor.listen {
-
-                port: port
+                mode: 'root'
+                listen: 
+                    port: port
 
             }, (newEdge) => 
 

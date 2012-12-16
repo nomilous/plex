@@ -66,7 +66,7 @@ class Edge
 
         @send 'event:register'
 
-            type: 'pending'
+            type: @opts.mode
             globalId: @globalId() 
 
         
