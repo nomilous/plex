@@ -16,5 +16,31 @@ describe 'proxy', ->
 
         catch error
 
-            error.should.equal 'proxy requires opts.connect parameters'
+            error.should.equal 'proxy requires opts.connect.adaptor parameters'
 
+    describe 'connects to parent', ->
+
+        server  = undefined
+        port    = 3000
+
+        before (done) ->
+
+            @serversSocket = undefined
+
+            server = require('socket.io').listen port
+
+            server.on 'connection', (connected) =>
+                @serversSocket = connected
+
+            done()
+
+        it 'uses opts.connect parameters', (done) ->
+
+            proxy.start
+                connect:
+                    adaptor: 'socket.io'
+                    uri: "http://localhost:3000"
+                    callback: (connected) ->
+                        done() 
+
+            
