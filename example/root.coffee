@@ -4,5 +4,5 @@ plex.start
 
     mode: 'root'
     adaptor: 'socket.io'
-    port: 1234
+    port: 3000
 

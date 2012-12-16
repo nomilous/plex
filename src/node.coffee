@@ -21,7 +21,7 @@ class Base
 
             else throw "adaptor not implemented: #{adaptor}"
 
-    @connect: (edge) -> 
+    @connect: (edge) => 
 
         #
         # called when an edge connects
@@ -29,7 +29,7 @@ class Base
 
         @edges[ edge.localId() ] = edge
 
-    @disconnect: (edge) -> 
+    @disconnect: (edge) => 
 
         #
         # called when an edge disconnects

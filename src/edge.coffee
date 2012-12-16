@@ -9,8 +9,20 @@ class Edge
     #   support multiple transport types in
     #   the proxy tree.
     # 
+
+
+    # 
+    #  connected - Contains the connection object
+    #              to be wrapped into the edge 
+    #              interface. 
+    #             
+    #  opts      - If connected is null the opts
+    #              are used to connect a new Bdge.
+    # 
+    # 
     
-    constructor: (opts = {}) ->
+    constructor: (@connected, opts = {}) ->
+
 
     #
     # edge defines localId()
