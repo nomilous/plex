@@ -11,7 +11,19 @@ class SocketIoEdge extends Edge
 
         @isClient = false
 
-        return if @connection
+        if @connection
+
+
+            #
+            # temporary
+            #
+
+            @connection.on 'event:register', (payload) -> 
+
+                console.log "recieve:", 'event:register', payload 
+
+
+            return
 
         unless @opts.connect and @opts.connect.uri
 
@@ -28,7 +40,15 @@ class SocketIoEdge extends Edge
 
         @connection.on 'connect', ->
 
+            _mine.handshake()
+
             onConnect _mine
+
+    send: ( event, payload ) -> 
+
+        console.log "send:", event, payload
+
+        @connection.emit event, payload
 
     localId: -> 
 

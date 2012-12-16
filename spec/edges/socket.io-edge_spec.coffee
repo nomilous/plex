@@ -15,6 +15,8 @@ describe 'SocketIoEdge', ->
                 #
 
                 id: 'socket.io.id'
+                on: (event, payload) ->
+                emit: (event, payload) ->
 
             @edge = new SocketIoEdge mockSocket 
 

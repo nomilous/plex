@@ -16,5 +16,3 @@ plex.start
             
 
             console.log "ROOT got connection with id = %s", edge.localId()
-
-

@@ -47,41 +47,35 @@ class Edge
         connectedThing = {}
         @connection = connectedThing
 
+
+        #
+        # TODO: onConnect callback in handshake success callback
+        #
+
+        @handshake()
+
+
         #
         # callback with self as connected Edge instance
         #
 
-
-        #
-        # handshake
-        #
-
-        @send {
-
-            'event:register':
-
-                type: 'pending'
-                id: @globalId()
-
-        }, (error, response) => 
-
-            onConnect this
+        onConnect this if onConnect instanceof Function
 
 
-    #
-    # edge should define a send method
-    # 
+    handshake: ->
 
-    send: (message, onResponse) -> 
+        @send 'event:register'
 
-        #
-        # for testing
-        #
+            type: 'pending'
+            globalId: @globalId() 
 
-        @sentAmessage = message
+        
+    send: (event, payload) -> 
 
-        console.log "send:", message
+        @sentAmessage = 
 
+            event: event
+            payload: payload
 
 
 

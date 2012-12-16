@@ -34,9 +34,10 @@ describe 'Edge', ->
             connect: {}
 
         edge.sentAmessage.should.eql
-            'event:register': 
+            event: 'event:register'
+            payload:
                 type: 'pending'
-                id: @globalid
+                globalId: @globalid
 
         done()
 
