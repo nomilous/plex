@@ -1,3 +1,5 @@
-root = require './base'
+Base = require './base'
 
-module.exports = root
+class Root extends Base
+
+module.exports = Root
