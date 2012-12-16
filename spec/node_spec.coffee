@@ -2,7 +2,7 @@ should = require 'should'
 Node   = require '../lib/node'
 Edge   = require '../lib/edge'
 
-describe 'Base', -> 
+describe 'Node', -> 
 
     it 'defines start()', (done) -> 
 
