@@ -35,7 +35,7 @@ describe 'SocketIoEdge', ->
             @serversSocket = undefined
 
             server = require('socket.io').listen port
-            
+
             server.on 'connection', (connected) =>
                 @serversSocket = connected
 
@@ -63,8 +63,8 @@ describe 'SocketIoEdge', ->
                 connect: 
                     uri: "http://localhost:#{  port  }"
 
-            edge.connect (connected) => 
+            edge.connect (clientSocket) => 
 
-                @serversSocket.id.should.equal connected.sessionid
+                @serversSocket.id.should.equal clientSocket.sessionid
                 done()
 
