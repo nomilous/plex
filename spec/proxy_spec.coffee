@@ -1,9 +1,10 @@
 should = require 'should'
-root   = require '../lib/root'
+proxy  = require '../lib/proxy'
 Edge   = require '../lib/edge'
 
-describe 'root', -> 
+describe 'proxy', -> 
 
+    
     it 'is identical to Base', (done) ->
 
         done()
@@ -11,5 +12,6 @@ describe 'root', ->
 
     it 'defines start()', (done) -> 
 
-        root.start.should.be.an.instanceof Function
+        proxy.start.should.be.an.instanceof Function
         done()
+
