@@ -2,10 +2,6 @@ Node = require './node'
 
 class Proxy extends Node
 
-    @parent: undefined
-
-    @children: @edges
-
     @start: ( opts = {} ) -> 
 
         unless opts.connect and opts.connect.adaptor
@@ -22,15 +18,7 @@ class Proxy extends Node
         # start connect (parent)
         #
 
-        ParentEdgeClass = require "./edges/#{  opts.connect.adaptor  }-edge"
-
-        @parent = new ParentEdgeClass null, opts
-
-        @parent.connect =>
-
-            if opts.connect.onConnect
-
-                opts.connect.onConnect @parent
+        @connect opts
 
 
         #
@@ -38,9 +26,6 @@ class Proxy extends Node
         #
 
         @listen opts
-
-
-    
 
 
 module.exports = Proxy

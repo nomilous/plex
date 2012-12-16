@@ -7,9 +7,14 @@ class Node
 
     @edges: {}
 
+
+    @uplink: undefined
+
+
     @start: (opts = {}) -> 
 
         @listen opts
+
 
     @listen: (opts) ->
 
@@ -20,12 +25,26 @@ class Node
 
             when 'socket.io'
 
-                server = require "./adaptors/#{ adaptor }-adaptor"
-                server.listen opts, @connect
+                @adaptor = require "./adaptors/#{ adaptor }-adaptor"
+                @adaptor.listen opts, @onConnect
 
             else throw "adaptor not implemented: #{adaptor}"
 
-    @connect: (edge) => 
+
+    @connect: (opts) -> 
+
+        UplinkClass = require "./edges/#{  opts.connect.adaptor  }-edge"
+
+        @uplink = new UplinkClass null, opts
+
+        @uplink.connect =>
+
+            if opts.connect.onConnect
+
+                opts.connect.onConnect @uplink
+
+
+    @onConnect: (edge) => 
 
         #
         # called when an edge connects
@@ -33,7 +52,8 @@ class Node
 
         @edges[ edge.localId() ] = edge
 
-    @disconnect: (edge) => 
+
+    @onDisconnect: (edge) => 
 
         #
         # called when an edge disconnects

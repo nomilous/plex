@@ -11,15 +11,15 @@ describe 'Node', ->
 
     it 'maintaines a list of connected edges keyed on edge.id()', (done) ->
 
-        Node.connect new Edge()
+        Node.onConnect new Edge()
         Node.edges.LOCAL_ID.should.not.be.undefined
         done()
 
     it 'marks edges as disconnected', (done) ->
 
         edge = new Edge()
-        Node.connect( edge )
-        Node.disconnect( edge )
+        Node.onConnect( edge )
+        Node.onDisconnect( edge )
         timestamp = Node.edges.LOCAL_ID.disconnected.timestamp
         
         #
