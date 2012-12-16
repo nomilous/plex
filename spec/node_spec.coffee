@@ -41,4 +41,24 @@ describe 'Node', ->
             done()
 
 
-        
+    it 'attaches reference to edges onto opts', (done) -> 
+
+        opts = 
+            listen: 
+                adaptor: 'socket.io'
+                port: 3006
+
+        Node.listen opts
+        opts.edges.should.not.be.undefined
+        done()
+
+    it 'attaches reference to uplink onto opts', (done) -> 
+
+        opts = 
+            connect: 
+                adaptor: 'socket.io'
+                uri: 'http://localhost:3000'
+
+        Node.connect opts
+        opts.uplink.should.not.be.undefined
+        done()

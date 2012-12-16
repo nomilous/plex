@@ -20,7 +20,8 @@ class Node
 
         adaptor = opts.listen.adaptor || 'socket.io'
         port = process.env.PORT || opts.listen.port || 3001
-
+        opts.edges = @edges 
+        
         switch adaptor
 
             when 'socket.io'
@@ -36,6 +37,8 @@ class Node
         UplinkClass = require "./edges/#{  opts.connect.adaptor  }-edge"
 
         @uplink = new UplinkClass null, opts
+
+        opts.uplink = @uplink
 
         @uplink.connect =>
 

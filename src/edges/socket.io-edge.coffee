@@ -15,14 +15,35 @@ class SocketIoEdge extends Edge
 
         if @connection
 
+            console.log "INIT protocol"
 
             #
-            # temporary
+            # temporary UNTESTED
             #
 
-            @connection.on 'event:register', (payload) -> 
+            @connection.on 'event:register', (payload) => 
 
-                console.log "recieve:", 'event:register', payload 
+                if @opts.mode == 'root'
+
+                    #
+                    # assemble topology at root
+                    #
+
+                else
+
+                    @opts.uplink.send 'event:edge:create'
+                        1: 
+                            type: @opts.mode
+                            globalId: @globalId()
+                        2:
+                            payload
+
+
+                console.log "recieve:", 'event:register', payload
+
+            @connection.on 'event:edge:create', (payload) => 
+
+                console.log "recieve:", 'event:edge:create', payload
 
 
             return
