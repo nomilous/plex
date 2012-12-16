@@ -32,7 +32,13 @@ describe 'SocketIoEdge', ->
 
         before (done) ->
 
+            @serversSocket = undefined
+
             server = require('socket.io').listen port
+            
+            server.on 'connection', (connected) =>
+                @serversSocket = connected
+
             done()
 
         after ->
@@ -51,6 +57,14 @@ describe 'SocketIoEdge', ->
 
 
 
-        xit 'connects to the server using opts.connect if connected is null', (done) ->
+        it 'connects to the server using opts.connect if connected is null', (done) ->
 
-            
+            edge = new SocketIoEdge null,
+                connect: 
+                    uri: "http://localhost:#{  port  }"
+
+            edge.connect (connected) => 
+
+                @serversSocket.id.should.equal connected.sessionid
+                done()
+
