@@ -3,27 +3,37 @@ ioClient = require 'socket.io-client'
 
 class SocketIoEdge extends Edge
 
-    constructor: (@socket, @opts = {}) ->
+    constructor: (@connection, @opts = {}) ->
 
         #
         # nothing to do if socket is defined
         #
 
-        return if @socket
+        @isClient = false
+
+        return if @connection
 
         unless @opts.connect and @opts.connect.uri
 
             throw 'SocketIoEdge requires connect.uri'
 
-    connect: (onConnect) -> 
+    connect: (onConnect) ->
 
-        @socket = ioClient.connect @opts.connect.uri
+        @isClient = true 
 
-        @socket.on 'connect', ->
+        @connection = ioClient.connect @opts.connect.uri
 
-            onConnect @socket
+        # darn this
+        _mine = this
 
-    localId: -> @socket.id
+        @connection.on 'connect', ->
+
+            onConnect _mine
+
+    localId: -> 
+
+        return @connection.id unless @isClient
+        return @connection.socket.sessionid
 
 
 module.exports = SocketIoEdge

@@ -12,16 +12,44 @@ class Edge
 
 
     # 
-    #  connected - Contains the connection object
+    # connection - Contains the connection object
     #              to be wrapped into the edge 
     #              interface. 
     #             
-    #  opts      - If connected is null the opts
-    #              are used to connect a new Bdge.
+    # opts       - If connected is null the opts
+    #              are used to connect a new Edge
+    #              as follows:
     # 
     # 
+    #              // config step
+    #              edge = new Edge( null, {
+    #                  connect: { 
+    #                     /* parameters to connect */  
+    #                  } 
+    #              });
+    #
+    #              // connect with callback
+    #              edge.connect( function(connectedThing) {
+    #                  /* on connection established */
+    #              });
     
-    constructor: (@connected, opts = {}) ->
+    constructor: (@connection, opts = {}) ->
+
+
+    connect: (onConnect) ->
+
+        #
+        # make pretend connection 
+        # 
+
+        connectedThing = {}
+        @connection = connectedThing
+
+        #
+        # callback with self as connected Edge instance
+        #
+
+        onConnect self
 
 
     #
@@ -31,7 +59,9 @@ class Edge
     #   locally attached edges 
     #
 
-    localId: -> 'LOCAL_ID'
+    localId: -> 
+        return 'LOCAL_ID' unless @connection
+        @connection.id
 
 
 module.exports = Edge

@@ -63,8 +63,14 @@ describe 'SocketIoEdge', ->
                 connect: 
                     uri: "http://localhost:#{  port  }"
 
-            edge.connect (clientSocket) => 
+            edge.connect (newEdge) => 
 
-                @serversSocket.id.should.equal clientSocket.sessionid
+                serverID = @serversSocket.id
+                console.log "SERVER:", serverID
+
+                clientID = newEdge.localId()
+                console.log "CLIENT:", clientID
+
+                serverID.should.equal clientID
                 done()
 
