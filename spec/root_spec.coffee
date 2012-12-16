@@ -1,14 +1,8 @@
 should = require 'should'
 root   = require '../lib/root'
 proxy  = require '../lib/proxy'
-Edge   = require '../lib/edge'
 
 describe 'root', -> 
-
-    it 'is identical to Base', (done) ->
-
-        done()
-
 
     it 'defines start()', (done) -> 
 

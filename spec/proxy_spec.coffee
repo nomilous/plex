@@ -1,6 +1,5 @@
 should = require 'should'
 proxy  = require '../lib/proxy'
-Edge   = require '../lib/edge'
 
 describe 'proxy', -> 
 
