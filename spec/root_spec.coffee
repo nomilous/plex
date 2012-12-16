@@ -20,8 +20,10 @@ describe 'root', ->
         root.start
             listen: 
                 adaptor: 'socket.io'
-                port: 3000
+                port: 3001
                 onListen: (adaptor) =>
+
+                    console.log 'on listen'
 
                     #
                     # integration testing root by attaching
@@ -34,7 +36,7 @@ describe 'root', ->
                     proxy.start
                         connect:
                             adaptor: 'socket.io'
-                            uri: 'http://localhost:3000'
+                            uri: 'http://localhost:3001'
                             onConnect: (clientEdge) -> 
 
                                 done()
@@ -42,3 +44,5 @@ describe 'root', ->
 
 
                 onConnect: (serverEdge) ->
+
+        

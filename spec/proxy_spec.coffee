@@ -9,7 +9,7 @@ describe 'proxy', ->
         proxy.start.should.be.an.instanceof Function
         done()
 
-    it 'throws on missing opts.connect', -> 
+    it 'throws on missing opts.connect', (done) -> 
 
         try 
             proxy.start {}
@@ -17,6 +17,7 @@ describe 'proxy', ->
         catch error
 
             error.should.equal 'proxy requires opts.connect.adaptor parameters'
+            done()
 
     describe 'connects to parent', ->
 
@@ -43,4 +44,4 @@ describe 'proxy', ->
                     onConnect: (connected) ->
                         done() 
 
-            
+    

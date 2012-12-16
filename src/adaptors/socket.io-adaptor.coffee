@@ -15,20 +15,20 @@ class SocketIoAdaptor
 
         _adaptor = this
 
-        server = io.listen opts.listen.port, ->
+        server = io.listen @opts.listen.port, =>
 
-            opts.onListen _adaptor if opts.onListen
+            @opts.listen.onListen _adaptor if @opts.listen.onListen
 
-        server.on 'connection', (socket) -> 
+        server.on 'connection', (socket) => 
 
             #
             # wrap connection socket into the Edge interface
             # and callback
             # 
 
-            edge = new SocketIoEdge socket, opts
+            edge = new SocketIoEdge socket, @opts
 
-            opts.onConnect edge if opts.onConnect
+            @opts.listen.onConnect edge if @opts.onConnect
 
             onConnect edge
 
