@@ -35,7 +35,7 @@ class Edge
     #                  /* on connection established */
     #              });
     
-    constructor: (@connection, opts = {}) ->
+    constructor: (@connection, @opts = {}) ->
 
 
     connect: (onConnect) ->
@@ -51,7 +51,38 @@ class Edge
         # callback with self as connected Edge instance
         #
 
-        onConnect self
+
+        #
+        # handshake
+        #
+
+        @send {
+
+            'event:register':
+
+                type: 'pending'
+                id: @globalId()
+
+        }, (error, response) => 
+
+            onConnect this
+
+
+    #
+    # edge should define a send method
+    # 
+
+    send: (message, onResponse) -> 
+
+        #
+        # for testing
+        #
+
+        @sentAmessage = message
+
+        console.log "send:", message
+
+
 
 
     #

@@ -4,6 +4,11 @@ os     = require 'os'
 
 describe 'Edge', ->
 
+    before (done) ->
+
+        @globalid = os.hostname() + '%' + process.pid
+        done()
+
     it 'has defines localId()', (done) -> 
 
         edge = new Edge()
@@ -18,9 +23,20 @@ describe 'Edge', ->
     
     it 'defaults globalId() to hostname%pid', (done) ->
 
-        hostname = os.hostname()
-        pid = process.pid
+        edge = new Edge()
+        edge.globalId().should.equal @globalid 
+        done() 
+
+    it 'sends registration when connecting as client', (done) -> 
 
         edge = new Edge()
-        edge.globalId().should.equal "#{ hostname }%#{ pid }" 
-        done() 
+        edge.connect
+            connect: {}
+
+        edge.sentAmessage.should.eql
+            'event:register': 
+                type: 'pending'
+                id: @globalid
+
+        done()
+
