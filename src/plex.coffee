@@ -5,7 +5,7 @@ plex =
     start: ( opts = {} ) -> 
 
         unless opts.mode
-            throw "plex requires mode: 'root|mux|leaf'" 
+            throw "plex requires mode: 'root|proxy|leaf'" 
 
         unless opts.adaptor
             throw "plex requires adaptor: '#{ plex.supportedAdaptors }'" 
