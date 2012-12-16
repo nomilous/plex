@@ -18,7 +18,7 @@ root =
             when 'socket.io'
 
                 server = require "./adaptors/#{ adaptor }-adaptor"
-                server.start opts, root.connect
+                server.listen opts, root.connect
 
             else throw "adaptor not implemented: #{adaptor}"
 
