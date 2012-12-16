@@ -1,6 +1,6 @@
-Base = require './base'
+Node = require './node'
 
-class Proxy extends Base
+class Proxy extends Node
 
 
 
