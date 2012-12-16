@@ -10,14 +10,17 @@ root =
 
     start: (opts = {}) -> 
 
-        transport = opts.transport || 'socket.io'
+        adaptor = opts.adaptor || 'socket.io'
         port = process.env.PORT || opts.port || 3001
 
-        switch transport
+        switch adaptor
 
-            when 'socket.io' then console.log 'start'
+            when 'socket.io'
 
-            else throw "transport not implemented: #{transport}"
+                server = require "./adaptors/#{ adaptor }-adaptor"
+                server.start opts, root.connect
+
+            else throw "adaptor not implemented: #{adaptor}"
 
     connect: (edge) -> 
 

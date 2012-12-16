@@ -1,6 +1,6 @@
 io           = require 'socket.io'
 Adaptor      = require '../adaptor'
-SocketIoEdge = require '../edges/socket-io-edge'
+SocketIoEdge = require '../edges/socket.io-edge'
 
 
 class SocketIoAdaptor

@@ -17,5 +17,9 @@ plex =
             
                 throw 'plex root with socket.io requires opts.port'
 
+        server = require "./#{  opts.mode  }"
+
+        server.start opts
+
 
 module.exports = plex

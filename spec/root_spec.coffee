@@ -30,14 +30,14 @@ describe 'root', ->
         timestamp.getHours().should.equal (new Date()).getHours()
         done()
 
-    it 'throws on unimplemented transport type', (done) -> 
+    it 'throws on unimplemented adaptor type', (done) -> 
 
         try 
-            root.start transport: 'celtic lantern morse'
+            root.start adaptor: 'celtic lantern morse'
 
         catch error
 
-            error.should.match /transport not implemented: celtic lantern morse/
+            error.should.match /adaptor not implemented: celtic lantern morse/
             done()
 
 

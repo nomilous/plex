@@ -1,5 +1,5 @@
 should       = require 'should'
-SocketIoEdge = require '../../lib/edges/socket-io-edge' 
+SocketIoEdge = require '../../lib/edges/socket.io-edge' 
 
 describe 'SocketIoEdge', ->
 

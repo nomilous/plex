@@ -1,5 +1,5 @@
 should          = require 'should'
-SocketIoAdaptor = require '../../lib/adaptors/socket-io-adaptor'
+SocketIoAdaptor = require '../../lib/adaptors/socket.io-adaptor'
 
 describe 'SocketIoAdaptor', ->
 

@@ -8,3 +8,4 @@ class SocketIoEdge extends Edge
 
 
 module.exports = SocketIoEdge
+
