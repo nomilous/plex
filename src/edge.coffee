@@ -1,3 +1,5 @@
+os = require 'os'
+
 class Edge
 
     #
@@ -62,6 +64,17 @@ class Edge
     localId: -> 
         return 'LOCAL_ID' unless @connection
         @connection.id
+
+
+    #
+    # edge must define globalId() to be unique throughout
+    # the entuie system
+    # 
+    # it defaults to hostname%pid
+    #
+
+    globalId: -> os.hostname() + '%' + process.pid
+
 
 
 module.exports = Edge
