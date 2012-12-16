@@ -32,10 +32,10 @@ class SocketIoEdge extends Edge
                 else
 
                     @opts.uplink.send 'event:edge:create'
-                        1: 
+                        a: 
                             type: @opts.mode
                             globalId: @globalId()
-                        2:
+                        b:
                             payload
 
 
@@ -43,8 +43,27 @@ class SocketIoEdge extends Edge
 
             @connection.on 'event:edge:create', (payload) => 
 
-                console.log "recieve:", 'event:edge:create', payload
+                switch @opts.mode
 
+                    when 'proxy'
+
+                        #
+                        # mark as passed through proxy
+                        #
+
+                        payload.proxied or= []
+                        payload.proxied.push @globalId()
+                        @opts.uplink.send 'event:edge:create', payload
+
+                    when 'root'
+
+                        proxied = 'none'
+                        proxied = payload.proxied[0] if payload.proxied
+
+                        console.log "NEW EDGE %s:%s ---- %s:%s  proxied: %s ", 
+                        payload.a.type, payload.a.globalId, 
+                        payload.b.type, payload.b.globalId,
+                        proxied
 
             return
 

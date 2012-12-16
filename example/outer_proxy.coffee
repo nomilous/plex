@@ -6,11 +6,11 @@ plex.start
     connect:
 
         #
-        # establish connection to root
+        # establish connection to inner_proxy
         #
 
         adaptor: 'socket.io'
-        uri: 'http://localhost:3000'
+        uri: 'http://localhost:3001'
         onConnect: (edge) -> 
 
             console.log "PROXY connected with id %s", edge.localId()
@@ -23,4 +23,6 @@ plex.start
         #
 
         adaptor: 'socket.io'
-        port: 3001
+        port: 3002
+
+    
