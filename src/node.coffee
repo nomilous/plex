@@ -9,6 +9,10 @@ class Node
 
     @start: (opts = {}) -> 
 
+        @listen opts
+
+    @listen: (opts) ->
+
         adaptor = opts.listen.adaptor || 'socket.io'
         port = process.env.PORT || opts.listen.port || 3001
 

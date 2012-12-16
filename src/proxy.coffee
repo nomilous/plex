@@ -12,6 +12,16 @@ class Proxy extends Node
 
             throw 'proxy requires opts.connect.adaptor parameters'
 
+
+        unless opts.listen and opts.listen.adaptor
+
+            throw 'proxy requires opts.listen.adaptor parameters'
+
+
+        #
+        # start connect (parent)
+        #
+
         ParentEdgeClass = require "./edges/#{  opts.connect.adaptor  }-edge"
 
         @parent = new ParentEdgeClass null, opts
@@ -21,6 +31,15 @@ class Proxy extends Node
             if opts.connect.onConnect
 
                 opts.connect.onConnect @parent
+
+
+        #
+        # start listen (children)
+        #
+
+        @listen opts
+
+
 
 
 module.exports = Proxy
