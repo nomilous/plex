@@ -22,9 +22,9 @@ describe 'Adaptor', ->
             adaptor.validate 
                 listen:
                     toMusic:
-                        artist:    'Jean Michel Jarre'
-                        album:     'Teo & Tea'
-                        track:     'Fresh News'
+                        artist:    'Raimonds Tiguls'
+                        album:     'Četri vēji'
+                        track:     'Kū es biju sarēbusi'
 
                         seriously: 'its a masterpiece'
 
