@@ -22,7 +22,9 @@ class SocketIoEdge extends Edge
             @connection.on 'disconnect', =>
 
                 #
-                # child disconnected, propagate uptree
+                # child disconnected, propagate uptree 
+                # 
+                #    i.e. rootward, its a baobab
                 #
 
                 return if @opts.mode == 'root'
