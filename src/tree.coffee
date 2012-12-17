@@ -19,5 +19,30 @@ class Tree
         @edges = {}
 
 
+    #
+    # ### Insert() a new edge into the tree
+    #
+    # `localEdge` expects the [Edge](edge.html) that represents
+    # the localside of the connection.
+    # 
+    # `connectData` expects the payload of the `event:connect` 
+    # message that was sent by the remote side at handshake
+    # 
+
+    insert: (localEdge, connectData) -> 
+
+        id = localEdge.localId()
+
+        @edges[ id ] = 
+
+            local: 
+
+                globalId: localEdge.globalId()
+                mode: @context.mode
+
+            remote: connectData
+
+
+
         
 module.exports = Tree

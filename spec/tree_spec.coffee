@@ -18,24 +18,58 @@ describe 'Tree', ->
         done()
 
 
+    describe 'manages the list of connected edges:', ->
+
+        beforeEach (done) ->
+
+            @sent = undefined
+
+            context = 
+                mode: 'proxy'
 
 
-    describe '.insert(edgeData)', ->
+            @tree = new Tree context
 
-        it 'adds an edge to the tree'
+            @localEdge = 
+                localId: -> 'localid'
+                globalId: -> 'GID'
+            
+            done()
 
-    describe '.remove(edgeData)', -> 
 
-        it 'marks an edge as disconnected'
 
-    describe 'has access to uplink SO THAT', ->
+        describe 'insert(edge, connectData)', ->
 
-        #
-        # SO THAT - there's something that could 
-        #           further enable TDD  
-        # 
+            it 'adds an edge to the tree', (done) -> 
 
-        it 'can inform rootward of edges connectng'
+                @tree.insert @localEdge,
 
-        it 'can inform rootward of edges disconnecting'
+                    #
+                    # remote edge event:connect payload
+                    #
+
+                    mode: 'leaf'
+                    globalId: 'remote_host:pid'
+
+                @tree.edges.localid.local.mode.should.equal 'proxy'
+                @tree.edges.localid.local.globalId.should.equal 'GID'
+                @tree.edges.localid.remote.mode.should.equal 'leaf'
+                @tree.edges.localid.remote.globalId.should.equal 'remote_host:pid'
+                done()
+
+
+        describe 'remove(edge)', -> 
+
+            it 'marks an edge as disconnected'
+
+        describe 'has access to uplink SO THAT', ->
+
+            #
+            # SO THAT - there's something that could 
+            #           further enable TDD  
+            # 
+
+            it 'can inform rootward of edges connectng'
+
+            it 'can inform rootward of edges disconnecting'
 
