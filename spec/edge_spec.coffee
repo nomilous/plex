@@ -1,7 +1,7 @@
 should = require 'should'
-edges  = require '../lib/edges'
+edges  = require '../lib/edge'
 
-describe 'edges', -> 
+describe 'edge', -> 
 
     it '.connect() returns a connected edge', (done) -> 
 
