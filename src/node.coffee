@@ -65,6 +65,7 @@ module.exports = class Node
     # In so far as thats possible.
     # 
 
+
     #
     # **listen() using opts.listen.adaptor**
     # 
@@ -76,7 +77,8 @@ module.exports = class Node
 
     listen: ( opts ) -> 
 
-        return 'the listening adaptor'
+        return (require './adaptors').listen opts
+
 
     #
     # **connect() using opts.connect.adaptor**
@@ -90,9 +92,7 @@ module.exports = class Node
 
     connect: ( opts ) -> 
 
-        return 'the connected edge'
-
-
+        return (require './edges').connect opts
 
 
 module.exports = Node
