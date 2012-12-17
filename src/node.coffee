@@ -77,7 +77,7 @@ module.exports = class Node
 
     listen: ( opts ) -> 
 
-        return (require './adaptors').listen opts
+        return ( require './adaptor' ).listen opts
 
 
     #
@@ -92,7 +92,7 @@ module.exports = class Node
 
     connect: ( opts ) -> 
 
-        return (require './edges').connect opts
+        return ( require './edge' ).connect opts
 
 
 module.exports = Node

@@ -24,7 +24,7 @@ describe 'Node', ->
         
         node.start 
             listen: 
-                adaptor: 'implemented-adaptor'
+                adaptor: 'base'
 
 
 
@@ -35,7 +35,7 @@ describe 'Node', ->
 
         node.start 
             connect: 
-                adaptor: 'implemented-edge'
+                adaptor: 'base'
 
 
     # it 'marks edges as disconnected', (done) ->
