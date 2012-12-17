@@ -20,7 +20,8 @@ class Tree
 
 
     #
-    # ### Insert() a new edge into the tree
+    # Insert() a new edge into the tree
+    # ---------------------------------
     #
     # `localEdge` expects the [Edge](edge.html) that represents
     # the localside of the connection.
@@ -30,6 +31,10 @@ class Tree
     # 
 
     insert: (localEdge, connectData) -> 
+
+        #
+        # Create a record of the edge
+        #
 
         id = localEdge.localId()
 
@@ -42,7 +47,11 @@ class Tree
 
             remote: connectData
 
+        #
+        # Send notification rootward
+        #
 
+        @context.uplink.send 'event:edge:connect', @edges[ id ]
 
         
 module.exports = Tree

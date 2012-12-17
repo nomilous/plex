@@ -1,6 +1,9 @@
 should = require 'should'
 Tree   = require '../lib/tree'
 
+tree = undefined
+sent = undefined
+
 describe 'Tree', ->
 
     it 'is constructed with Context', (done) ->
@@ -22,13 +25,16 @@ describe 'Tree', ->
 
         beforeEach (done) ->
 
-            @sent = undefined
-
             context = 
                 mode: 'proxy'
+                uplink:
+                    send: (event, payload) -> 
+                        sent = 
+                            event: event
+                            payload: payload
 
 
-            @tree = new Tree context
+            tree = new Tree context
 
             @localEdge = 
                 localId: -> 'localid'
@@ -40,9 +46,10 @@ describe 'Tree', ->
 
         describe 'insert(edge, connectData)', ->
 
+
             it 'adds an edge to the tree', (done) -> 
 
-                @tree.insert @localEdge,
+                tree.insert @localEdge,
 
                     #
                     # remote edge event:connect payload
@@ -51,10 +58,32 @@ describe 'Tree', ->
                     mode: 'leaf'
                     globalId: 'remote_host:pid'
 
-                @tree.edges.localid.local.mode.should.equal 'proxy'
-                @tree.edges.localid.local.globalId.should.equal 'GID'
-                @tree.edges.localid.remote.mode.should.equal 'leaf'
-                @tree.edges.localid.remote.globalId.should.equal 'remote_host:pid'
+                tree.edges.localid.local.mode.should.equal 'proxy'
+                tree.edges.localid.local.globalId.should.equal 'GID'
+                tree.edges.localid.remote.mode.should.equal 'leaf'
+                tree.edges.localid.remote.globalId.should.equal 'remote_host:pid'
+                done()
+
+
+            it "sends an 'event:node:connect' rootward", (done) -> 
+
+                tree.insert @localEdge,
+
+                    mode: 'leaf'
+                    globalId: 'remote_host:pid'
+
+
+                sent.should.eql 
+
+                    event: 'event:edge:connect'
+                    payload: 
+                        local: 
+                            mode: 'proxy'
+                            globalId: 'GID'
+                        remote:
+                            mode: 'leaf'
+                            globalId: 'remote_host:pid'
+
                 done()
 
 
