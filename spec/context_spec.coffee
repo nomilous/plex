@@ -10,5 +10,10 @@ describe 'Context', ->
         config = thing: 'a'
         context = new Context config
         context.thing.should.equal 'a'
+        done()
 
+    it 'contains reference to the Tree', (done) -> 
+
+        context = new Context
+        context.tree.edges.should.eql {}
         done()

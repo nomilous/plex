@@ -17,4 +17,9 @@ module.exports = class Context
 
             @[property] = opts[property]
 
+        #
+        # A reference to the [Tree](tree.html)
+        #
     
+        @tree = new (require './tree')
+

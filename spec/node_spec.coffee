@@ -17,18 +17,6 @@ describe 'Node', ->
         done()
 
 
-
-    # it 'defines start()', (done) -> 
-
-    #     Node.start.should.be.an.instanceof Function
-    #     done()
-
-    # it 'maintaines a list of connected edges keyed on edge.id()', (done) ->
-
-    #     Node.onConnect new Edge()
-    #     Node.edges.LOCAL_ID.should.not.be.undefined
-    #     done()
-
     # it 'marks edges as disconnected', (done) ->
 
     #     edge = new Edge()
