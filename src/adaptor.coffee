@@ -5,11 +5,11 @@ module.exports =
     # plugin specified in `opts.listen.adaptor`
     # 
 
-    listen: ( opts ) -> 
+    listen: ( context ) -> 
 
         klass = (require './plugin').load
 
             type: 'adaptor'
-            name: opts.listen.adaptor
+            name: context.listen.adaptor
 
-        return new klass opts
+        return new klass context

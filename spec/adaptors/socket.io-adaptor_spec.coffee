@@ -6,7 +6,7 @@ describe 'SocketIoAdaptor', ->
     it 'throws if opts.port is undefined', (done) ->
 
         try 
-            SocketIoAdaptor.listen {}, (newEdge) ->
+            adaptor = new SocketIoAdaptor {}
 
         catch error
 
@@ -14,46 +14,46 @@ describe 'SocketIoAdaptor', ->
             done()
 
 
-    describe 'listening', -> 
+    # describe 'listening', -> 
 
-        ioClient  = require 'socket.io-client'
-        adaptor = undefined
-        port    = 3000
+    #     ioClient  = require 'socket.io-client'
+    #     adaptor = undefined
+    #     port    = 3000
 
-        before (done) ->
+    #     before (done) ->
 
-            @edge = undefined
+    #         @edge = undefined
 
-            adaptor = SocketIoAdaptor.listen {
-                mode: 'root'
-                listen: 
-                    port: port
+    #         adaptor = SocketIoAdaptor.listen {
+    #             mode: 'root'
+    #             listen: 
+    #                 port: port
 
-            }, (newEdge) => 
+    #         }, (newEdge) => 
 
-                @edge = newEdge
+    #             @edge = newEdge
 
-            done()
-
-
-        after ->
-
-            # adaptor.close()
+    #         done()
 
 
-        it 'calls back with newEdge', (done) -> 
+    #     after ->
 
-            client = ioClient.connect "http://localhost:#{  port  }"
+    #         # adaptor.close()
 
-            client.on 'connect', => 
 
-                #
-                # serverside callback populated @edge
-                # 
+    #     it 'calls back with newEdge', (done) -> 
 
-                serversideID = @edge.localId()
-                clientsideID = client.socket.sessionid
+    #         client = ioClient.connect "http://localhost:#{  port  }"
 
-                serversideID.should.equal clientsideID
-                done()
-                
+    #         client.on 'connect', => 
+
+    #             #
+    #             # serverside callback populated @edge
+    #             # 
+
+    #             serversideID = @edge.localId()
+    #             clientsideID = client.socket.sessionid
+
+    #             serversideID.should.equal clientsideID
+    #             done()
+    #             

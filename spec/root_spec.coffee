@@ -9,7 +9,7 @@ describe 'root', ->
         root.start.should.be.an.instanceof Function
         done()
 
-    it 'listens according to opts.listen', (done) ->
+    xit 'listens according to opts.listen', (done) ->
 
         root.start
             listen: 

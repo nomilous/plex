@@ -1,52 +1,34 @@
 should  = require 'should'
-Adaptor = require '../../lib/adaptors/base-adaptor'
+BaseAdaptor = require '../../lib/adaptors/base-adaptor'
 
 describe 'Adaptor', -> 
 
-    it 'defines listen() as a class method', (done) -> 
 
-        Adaptor.listen.should.be.an.instanceof Function
-        done()
-
-
-    it 'throws if opts is undefined', (done) -> 
+    it 'throws if context is undefined', (done) -> 
 
         try
-            Adaptor.listen()
+            adaptor = new BaseAdaptor
+            adaptor.validate()
 
         catch error
 
-            error.should.match /undefined opts/
+            error.should.match /undefined context/
             done()
 
-
-    it 'throws if callback onConnect(newEdge) is undefined', (done) ->
+    it 'throws if context.listen.adaptor is undefined', (done) -> 
 
         try
-            Adaptor.listen {}
+            adaptor = new BaseAdaptor
+            adaptor.validate 
+                listen:
+                    toMusic:
+                        artist:    'Jean Michel Jarre'
+                        album:     'Teo & Tea'
+                        track:     'Fresh News'
+
+                        seriously: 'its a masterpiece'
 
         catch error
 
-            error.should.match /undefined onConnect/
-            done()
-
-    it 'throws if callback signature does not have 1 arg', (done) ->
-
-        try 
-            Adaptor.listen {}, -> 
-
-                # 
-                # no args for this callback
-                # 
-
-        catch error
-
-            error.should.match /with 1 arg/
-            done()
-
-    it 'calls back when a new edge connects', (done) -> 
-
-        Adaptor.listen {}, (newEdge) -> 
-
-            newEdge.localId().should.equal 'LOCAL_ID'
+            error.should.match /adaptor requires context\.listen\.adaptor/
             done()

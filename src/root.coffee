@@ -1,5 +1,11 @@
 Node = require './node'
 
-class Root extends Node
+#
+# Start a Root node
+#
 
-module.exports = Root
+module.exports = 
+
+    start: ( opts ) -> 
+
+        return (new Node).start opts

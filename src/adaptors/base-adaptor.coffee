@@ -1,42 +1,37 @@
 class Adaptor 
 
-    #
-    # EXAMPLE Adaptor (a literal, not a class)
-    # 
-    # ie. The thing that listens for 'clients'
-    #     attempting to attach, as edges, onto
-    #     the local node.
-    #
-    # 
-    # Note: This literal demonstrates the 
-    #       behaviour that plex expects of
-    #       an Adaptor
-    #    
+    validate: (context) ->     # , onConnect) -> 
 
-    @validate: (opts, onConnect) -> 
+        throw 'undefined context' unless context
 
-        throw 'undefined opts' unless opts
-        throw 'undefined onConnect(newEdge) callback' unless onConnect
-        throw 'expected onConnect(newEdge) with 1 arg' unless onConnect.length == 1
+        unless context.listen and context.listen.adaptor
+            
+            throw 'adaptor requires context.listen.adaptor'
+
+
+
+
+        #throw 'undefined onConnect(newEdge) callback' unless onConnect
+        #throw 'expected onConnect(newEdge) with 1 arg' unless onConnect.length == 1
     
-    @listen: ( @opts, onConnect ) -> 
+    # @listen: ( @opts, onConnect ) -> 
 
-        @validate @opts, onConnect
+    #     @validate @opts, onConnect
         
 
-        #
-        # listen for connecting 'clients'
-        #
+    #     #
+    #     # listen for connecting 'clients'
+    #     #
 
-        #
-        # pretend one connected and call-it-back with onConnect(newEdge)
-        #
+    #     #
+    #     # pretend one connected and call-it-back with onConnect(newEdge)
+    #     #
 
-        newEdge = new (require './edge')  # nice... :) 
-                                          # 
-                                          # require keeps impressing me
-                                          # 
-        onConnect newEdge
+    #     newEdge = new (require './edge')  # nice... :) 
+    #                                       # 
+    #                                       # require keeps impressing me
+    #                                       # 
+    #     onConnect newEdge
 
 
 module.exports = Adaptor

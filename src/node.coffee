@@ -13,6 +13,8 @@ module.exports = class Node
 
     constructor: -> 
 
+        console.log 'Node()'
+
     #
     # ### Start() a new instance running
     # 
@@ -20,6 +22,8 @@ module.exports = class Node
     #
 
     start: ( opts = {} ) -> 
+
+        console.log '\nNode().start() with:', opts
 
         context = new (require './context') opts
 
@@ -37,7 +41,7 @@ module.exports = class Node
         # </pre>
         # 
 
-        context.adaptor = @listen opts if opts.listen
+        context.adaptor = @listen context if opts.listen
 
 
         #
@@ -52,7 +56,7 @@ module.exports = class Node
         #        # 
         # </pre>
 
-        context.uplink = @connect opts if opts.connect
+        context.uplink = @connect context if opts.connect
 
 
 
@@ -75,9 +79,11 @@ module.exports = class Node
     # * Return the listening Adaptor
     # 
 
-    listen: ( opts ) -> 
+    listen: ( context ) -> 
 
-        return ( require './adaptor' ).listen opts
+        console.log '\nNode().listen() with:', context
+
+        return ( require './adaptor' ).listen context
 
 
     #
@@ -90,9 +96,11 @@ module.exports = class Node
     # * Returns the connected edge
     # 
 
-    connect: ( opts ) -> 
+    connect: ( context ) -> 
 
-        return ( require './edge' ).connect opts
+        console.log 'Node().connect() with:', context
+
+        return ( require './edge' ).connect context
 
 
 module.exports = Node

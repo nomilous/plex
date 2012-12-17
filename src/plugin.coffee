@@ -4,6 +4,8 @@ module.exports =
 
     load: ( defn ) ->
 
+        console.log '\nplugin.load() with:', defn
+
         throw "plugin.load requires name:'name'" unless defn.name
         throw "plugin.load requires type:'type'" unless defn.type
 

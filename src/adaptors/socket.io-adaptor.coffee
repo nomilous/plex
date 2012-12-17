@@ -1,37 +1,58 @@
-io           = require 'socket.io'
-Adaptor      = require '../adaptor'
-SocketIoEdge = require '../edges/socket.io-edge'
+BaseAdaptor = require './base-adaptor'
+
+module.exports = class SocketIoAdaptor extends BaseAdaptor
+
+    constructor: (@context) ->
+
+        console.log '\nSocketIoAdaptor() with:', @context
+
+        return @listen()
+
+    listen: ->
+
+        @validate @context
 
 
-class SocketIoAdaptor
 
-    @listen: ( @opts, onConnect ) ->
 
-        Adaptor.validate @opts, onConnect
 
-        unless @opts.listen and @opts.listen.port
 
-            throw 'undefined opts.port' 
+# io           = require 'socket.io'
+# Adaptor      = require '../adaptor'
+# SocketIoEdge = require '../edges/socket.io-edge'
 
-        _adaptor = this
 
-        server = io.listen @opts.listen.port, =>
+# class SocketIoAdaptor
 
-            @opts.listen.onListen _adaptor if @opts.listen.onListen
+#     @listen: ( @context, onConnect ) ->
 
-        server.on 'connection', (socket) => 
+#         console.log '\nSocketIoAdaptor().listen() with:', @context
 
-            #
-            # wrap connection socket into the Edge interface
-            # and callback
-            # 
+#         Adaptor.validate @opts, onConnect
 
-            edge = new SocketIoEdge socket, @opts
+#         unless @opts.listen and @opts.listen.port
 
-            @opts.listen.onConnect edge if @opts.onConnect
+#             throw 'undefined opts.port' 
 
-            onConnect edge
+#         _adaptor = this
 
-        return server
+#         server = io.listen @opts.listen.port, =>
 
-module.exports = SocketIoAdaptor
+#             @opts.listen.onListen _adaptor if @opts.listen.onListen
+
+#         server.on 'connection', (socket) => 
+
+#             #
+#             # wrap connection socket into the Edge interface
+#             # and callback
+#             # 
+
+#             edge = new SocketIoEdge socket, @opts
+
+#             @opts.listen.onConnect edge if @opts.onConnect
+
+#             onConnect edge
+
+#         return server
+
+# module.exports = SocketIoAdaptor
