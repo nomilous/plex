@@ -1,4 +1,10 @@
+#
+# This is not a functioning Adaptor. It is used for testing purposes.
+# 
+
+
 class BaseAdaptor 
+
 
     constructor: (@context) ->
 
@@ -7,6 +13,7 @@ class BaseAdaptor
         @validate @context
 
         return @listen()
+
 
     validate: (context) ->     # , onConnect) -> 
 
@@ -17,34 +24,62 @@ class BaseAdaptor
             throw 'adaptor requires context.listen.adaptor'
 
 
+    #
+    # ### insertEdge() into the local context
+    # 
+    # This method should be used in Adaptor implementations
+    #
+
+    insertEdge: (edgeClass, connection) -> 
+
+        edge = new edgeClass connection
+
+        #
+        # **TODO** The connecting edge may already be present,
+        # depending on the implementation of localId() and 
+        # whether or not it is a re-connect after-drop,
+        #
+
+        id = edge.localId()
+
+        @context.edges[id] = edge
+
+        @context.uplink.send 'event:connect'
+
+            mode: @context.mode
+            globalId: @context.globalId()
+
+
     listen: -> 
 
         console.log '\nBaseAdaptor().listen()'
 
-        
+        #
+        # It pretens to enter a listen loop
+        #
 
+        true == true == true == true 
 
-        #throw 'undefined onConnect(newEdge) callback' unless onConnect
-        #throw 'expected onConnect(newEdge) with 1 arg' unless onConnect.length == 1
-    
-    # @listen: ( @opts, onConnect ) -> 
+        # 
+        # It can be initialized with a mock connection/socket that will be
+        # be used to generate a connecting edge.
+        # 
+        # eg. 
+        # 
+        # <pre>
+        #  
+        # new BaseAdaptor
+        #   listen:
+        #     mockConnection: [Object]
+        # 
+        #     see [spec/adaptors/base-adaptor.coffee](https://github.com/nomilous/plex/blob/master/spec/adaptors/base-adaptor_spec.coffee#L53)
+        # 
+        # </pre>
+        # 
 
-    #     @validate @opts, onConnect
-        
+        if @context.listen.mockConnection
 
-    #     #
-    #     # listen for connecting 'clients'
-    #     #
-
-    #     #
-    #     # pretend one connected and call-it-back with onConnect(newEdge)
-    #     #
-
-    #     newEdge = new (require './edge')  # nice... :) 
-    #                                       # 
-    #                                       # require keeps impressing me
-    #                                       # 
-    #     onConnect newEdge
+            @insertEdge (require '../edges/base-edge'), @context.listen.mockConnection
 
 
 module.exports = BaseAdaptor

@@ -16,7 +16,7 @@ module.exports = class Node
         console.log 'Node()'
 
     #
-    # ### Start() a new instance running
+    # `node.start()` **a new instance running**
     # 
     # This returns the running [Context](context.html)
     #
@@ -155,15 +155,6 @@ module.exports = Node
 #             if opts.connect.onConnect
 
 #                 opts.connect.onConnect @uplink
-
-
-#     @onConnect: (edge) => 
-
-#         #
-#         # called when an edge connects
-#         #
-
-#         @edges[ edge.localId() ] = edge
 
 
 #     @onDisconnect: (edge) => 

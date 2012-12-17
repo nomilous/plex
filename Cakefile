@@ -62,5 +62,5 @@ task 'spec', "Run all tests", ->
 task 'build', "Build all", ->
   build ->
 
-task 'docs', "Build docs", -> 
+task 'doc', "Build docs", -> 
   docs -> 

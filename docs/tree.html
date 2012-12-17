@@ -5,12 +5,12 @@ and maintain the tree topology.</p>             </td>             <td class="cod
 of this <a href="node.html">Node</a> </p>
 
 <p><code>tree.edges</code> houses the list of adjacent Nodes
-in the branch rooted at this Node</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="vi">@edges = </span><span class="p">{}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h2>Insert() a new edge into the tree</h2>
+in the branch rooted at this Node</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="vi">@edges = </span><span class="p">{}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><code>tree.insert()</code> <strong>a new edge into the tree</strong></p>
 
-<p><code>localEdge</code> expects the <a href="edge.html">Edge</a> that represents
+<p><strong>localEdge</strong> - expects the <a href="edge.html">Edge</a> that represents
 the localside of the connection.</p>
 
-<p><code>connectData</code> expects the payload of the <code>event:connect</code> 
+<p><strong>connectData</strong> - expects the payload of the <strong>event:connect</strong> 
 message that was sent by the remote side at handshake</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">insert: </span><span class="nf">(localEdge, connectData) -&gt;</span> </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Create a record of the edge</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nv">id = </span><span class="nx">localEdge</span><span class="p">.</span><span class="nx">localId</span><span class="p">()</span>
 
         <span class="nx">@edges</span><span class="p">[</span> <span class="nx">id</span> <span class="p">]</span> <span class="o">=</span> 

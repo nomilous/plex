@@ -9,9 +9,13 @@ running <a href="plex.html">Plex</a> instance.</p>
 <li><a href="leaf.html">Leaf</a></li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">Node</span>
 
-    <span class="nv">constructor: </span><span class="o">-&gt;</span> </pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>Start() a new instance running</h3>
+    <span class="nv">constructor: </span><span class="o">-&gt;</span> 
+
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;Node()&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p><code>node.start()</code> <strong>a new instance running</strong></p>
 
 <p>This returns the running <a href="context.html">Context</a></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">start: </span><span class="nf">( opts = {} ) -&gt;</span> 
+
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;\nNode().start() with:&#39;</span><span class="p">,</span> <span class="nx">opts</span>
 
         <span class="nv">context = </span><span class="k">new</span> <span class="p">(</span><span class="nx">require</span> <span class="s">&#39;./context&#39;</span><span class="p">)</span> <span class="nx">opts</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><strong>To configure the node to listen</strong></p>
 
@@ -22,7 +26,7 @@ context = node.start
        # 
        # see  ./adaptors/*-adaptor
        # 
-</pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nv">context.adaptor = </span><span class="nx">@listen</span> <span class="nx">opts</span> <span class="k">if</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">listen</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><strong>To configure the node to connect</strong></p>
+</pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nv">context.adaptor = </span><span class="nx">@listen</span> <span class="nx">context</span> <span class="k">if</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">listen</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><strong>To configure the node to connect</strong></p>
 
 <pre>
 node.start 
@@ -31,7 +35,7 @@ node.start
        #
        # see  ./edges/*-edge
        # 
-</pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nv">context.uplink = </span><span class="nx">@connect</span> <span class="nx">opts</span> <span class="k">if</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">connect</span>
+</pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nv">context.uplink = </span><span class="nx">@connect</span> <span class="nx">context</span> <span class="k">if</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">connect</span>
 
 
 
@@ -43,17 +47,21 @@ node.start
 <li><p>Starts a listening Adaptor that multiple edges
 may attach to</p></li>
 <li><p>Return the listening Adaptor</p></li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">listen: </span><span class="nf">( opts ) -&gt;</span> 
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">listen: </span><span class="nf">( context ) -&gt;</span> 
 
-        <span class="k">return</span> <span class="p">(</span><span class="nx">require</span> <span class="s">&#39;./adaptors&#39;</span><span class="p">).</span><span class="nx">listen</span> <span class="nx">opts</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p><strong>connect() using opts.connect.adaptor</strong></p>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;\nNode().listen() with:&#39;</span><span class="p">,</span> <span class="nx">context</span>
+
+        <span class="k">return</span> <span class="p">(</span> <span class="nx">require</span> <span class="s">&#39;./adaptor&#39;</span> <span class="p">).</span><span class="nx">listen</span> <span class="nx">context</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p><strong>connect() using opts.connect.adaptor</strong></p>
 
 <ul>
 <li><p>Connects the edge to some remote Adaptor</p></li>
 <li><p>Sends a Handshake message</p></li>
 <li><p>Returns the connected edge</p></li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">connect: </span><span class="nf">( opts ) -&gt;</span> 
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">connect: </span><span class="nf">( context ) -&gt;</span> 
 
-        <span class="k">return</span> <span class="p">(</span><span class="nx">require</span> <span class="s">&#39;./edges&#39;</span><span class="p">).</span><span class="nx">connect</span> <span class="nx">opts</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;Node().connect() with:&#39;</span><span class="p">,</span> <span class="nx">context</span>
+
+        <span class="k">return</span> <span class="p">(</span> <span class="nx">require</span> <span class="s">&#39;./edge&#39;</span> <span class="p">).</span><span class="nx">connect</span> <span class="nx">context</span>
 
 
 <span class="nv">module.exports = </span><span class="nx">Node</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>class Node</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <pre><code>#
@@ -80,18 +88,13 @@ may attach to</p></li>
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <pre><code>    @uplink.connect =&gt;
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <pre><code>        if opts.connect.onConnect
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <pre><code>            opts.connect.onConnect @uplink
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <pre><code>@onConnect: (edge) =&gt; 
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <pre><code>@onDisconnect: (edge) =&gt; 
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <pre><code>    #
-    # called when an edge connects
-    #
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <pre><code>    @edges[ edge.localId() ] = edge
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <pre><code>@onDisconnect: (edge) =&gt; 
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <pre><code>    #
     # called when an edge disconnects
     # 
     # - set disconnected time
     # - reap later, or report
     # 
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <pre><code>    @edges[ edge.localId() ].disconnected =
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <pre><code>        timestamp: new Date()
-</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>module.exports = Node</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <pre><code>    @edges[ edge.localId() ].disconnected =
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <pre><code>        timestamp: new Date()
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>module.exports = Node</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

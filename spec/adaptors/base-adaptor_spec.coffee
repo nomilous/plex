@@ -1,5 +1,6 @@
-should  = require 'should'
+should      = require 'should'
 BaseAdaptor = require '../../lib/adaptors/base-adaptor'
+Context     = require '../../lib/context'
 
 describe 'Adaptor', -> 
 
@@ -35,9 +36,12 @@ describe 'Adaptor', ->
     it 'listens', (done) ->
 
         #
-        # override listen()
+        # temporarilly override listen()
         #
+
         itListenend = false
+
+        previous = BaseAdaptor.prototype.listen
 
         BaseAdaptor.prototype.listen = -> itListenend = true
 
@@ -47,8 +51,59 @@ describe 'Adaptor', ->
 
         itListenend.should.equal true
 
+        #
+        # and fix it
+        #
+
+        BaseAdaptor.prototype.listen = previous
+
         done()
 
+
+    it 'stores the connecting edge instance into context.edges', (done) -> 
+
+        context = new Context
+            mode: 'proxy'
+            # mock
+            uplink: send: ->
+            listen:
+                adaptor: {}
+                mockConnection:
+                    id: 'THE_LOCAL_ID'
+
+
+        new BaseAdaptor context
+
+        context.edges.THE_LOCAL_ID.should.not.be.undefined
+                
+        done()
+
+
+    it 'informs the Tree of the new Edge', (done) -> 
+
+        sent = 'not yet'
+
+        context = new Context
+            mode: 'proxy'
+            globalId: -> 'override'
+            # mock
+            uplink: send: (event, payload) -> sent = event: event, payload: payload
+            listen:
+                adaptor: {}
+                mockConnection:
+                    id: 'THE_LOCAL_ID'
+
+        
+        new BaseAdaptor context
+        
+        sent.should.eql 
+
+            event: 'event:connect'
+            payload: 
+                mode: 'proxy'
+                globalId: 'override'
+
+        done()
 
 
 

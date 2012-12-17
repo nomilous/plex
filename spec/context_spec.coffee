@@ -17,3 +17,23 @@ describe 'Context', ->
         context = new Context
         context.tree.edges.should.eql {}
         done()
+
+    it 'contains reference to all connected edge INSTANCES', (done) -> 
+
+        context = new Context
+        context.edges.should.eql {}
+        done()
+
+    it 'defines globalId()', (done) -> 
+
+        context = new Context
+        context.globalId().should.equal "#{ (require 'os').hostname() }%#{ process.pid }"
+        done()
+
+    it 'allows a globalId() override', (done) -> 
+
+        context = new Context
+            globalId: -> 'something unique'
+
+        context.globalId().should.equal 'something unique'
+        done()

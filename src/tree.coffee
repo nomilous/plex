@@ -20,13 +20,12 @@ class Tree
 
 
     #
-    # Insert() a new edge into the tree
-    # ---------------------------------
+    # `tree.insert()` **a new edge into the tree**
     #
-    # `localEdge` expects the [Edge](edge.html) that represents
+    # **localEdge** - expects the [Edge](edge.html) that represents
     # the localside of the connection.
     # 
-    # `connectData` expects the payload of the `event:connect` 
+    # **connectData** - expects the payload of the **event:connect** 
     # message that was sent by the remote side at handshake
     # 
 
