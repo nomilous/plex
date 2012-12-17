@@ -9,23 +9,88 @@
 # * [Leaf](leaf.html)
 #
 
-class Node
+module.exports = class Node
 
-   
     constructor: -> 
-
 
     #
     # ### Start() a new instance running
     # 
-    # This returns the running Context[context.html]
+    # This returns the running [Context](context.html)
     #
 
     start: ( opts = {} ) -> 
 
         context = new (require './context') opts
 
+
+        # 
+        # **To configure the node to listen**
+        # 
+        # <pre>
+        # context = node.start
+        #   listen: 
+        #     adaptor: 'name'
+        #        # 
+        #        # see  ./adaptors/*-adaptor
+        #        # 
+        # </pre>
+        # 
+
+        context.adaptor = @listen opts if opts.listen
+
+
+        #
+        # **To configure the node to connect**
+        # 
+        # <pre>
+        # node.start 
+        #   connect: 
+        #     adaptor: 'name'
+        #        #
+        #        # see  ./edges/*-edge
+        #        # 
+        # </pre>
+
+        context.uplink = @connect opts if opts.connect
+
+
+
         return context
+
+
+    #
+    # ### Private methods.
+    #
+    # In so far as thats possible.
+    # 
+
+    #
+    # **listen() using opts.listen.adaptor**
+    # 
+    # * Starts a listening Adaptor that multiple edges
+    #   may attach to
+    #
+    # * Return the listening Adaptor
+    # 
+
+    listen: ( opts ) -> 
+
+        return 'the listening adaptor'
+
+    #
+    # **connect() using opts.connect.adaptor**
+    #
+    # * Connects the edge to some remote Adaptor
+    # 
+    # * Sends a Handshake message
+    # 
+    # * Returns the connected edge
+    # 
+
+    connect: ( opts ) -> 
+
+        return 'the connected edge'
 
 
 

@@ -17,6 +17,27 @@ describe 'Node', ->
         done()
 
 
+    it 'start() calls listen() if it should', (done) ->
+
+        node = new Node
+        node.listen = -> done()
+        
+        node.start 
+            listen: 
+                adaptor: 'implemented-adaptor'
+
+
+
+    it 'start() calls connect() if it should', (done) -> 
+
+        node = new Node
+        node.connect = -> done()
+
+        node.start 
+            connect: 
+                adaptor: 'implemented-edge'
+
+
     # it 'marks edges as disconnected', (done) ->
 
     #     edge = new Edge()
