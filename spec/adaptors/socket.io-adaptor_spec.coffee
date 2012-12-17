@@ -3,57 +3,52 @@ SocketIoAdaptor = require '../../lib/adaptors/socket.io-adaptor'
 
 describe 'SocketIoAdaptor', ->
 
-    it 'throws if opts.port is undefined', (done) ->
+    it 'throws if listen.port is undefined', (done) ->
 
         try 
-            adaptor = new SocketIoAdaptor {}
+            adaptor = new SocketIoAdaptor
+                listen:
+                    adaptor: 'socket.io'
 
         catch error
 
-            error.should.equal 'undefined opts.port'
+            error.should.equal 'undefined listen.port'
             done()
 
 
-    # describe 'listening', -> 
+    it 'callsback to listen.onListen if defined', (done) -> 
 
-    #     ioClient  = require 'socket.io-client'
-    #     adaptor = undefined
-    #     port    = 3000
-
-    #     before (done) ->
-
-    #         @edge = undefined
-
-    #         adaptor = SocketIoAdaptor.listen {
-    #             mode: 'root'
-    #             listen: 
-    #                 port: port
-
-    #         }, (newEdge) => 
-
-    #             @edge = newEdge
-
-    #         done()
+        new SocketIoAdaptor
+                listen:
+                    adaptor: 'socket.io'
+                    port: 3000
+                    onListen: (server) -> 
+                        #console.log '\nSERVER: ', server
+                        done()
 
 
-    #     after ->
+    it 'callsback to listen.onConnect if defined', (done) ->
 
-    #         # adaptor.close()
+        sent = 'nothing yet'
+        context = new (require '../../lib/context')
+            # mock
+            uplink: send: (e, p) -> sent = event: e, payload: p
+            mode: 'leaf'
+            listen:
+                adaptor: 'socket.io'
+                port: 3001
+                onListen: (server) -> 
 
+                    #
+                    # its listening, connect a client to it
+                    #
 
-    #     it 'calls back with newEdge', (done) -> 
+                    (require 'socket.io-client').connect "http://localhost:3001"
 
-    #         client = ioClient.connect "http://localhost:#{  port  }"
+                onConnect: (socket) -> 
 
-    #         client.on 'connect', => 
+                    #console.log '\nCONTEXT: ', context
+                    #console.log '\nHANDSHAKE:', sent
+                    done()
 
-    #             #
-    #             # serverside callback populated @edge
-    #             # 
-
-    #             serversideID = @edge.localId()
-    #             clientsideID = client.socket.sessionid
-
-    #             serversideID.should.equal clientsideID
-    #             done()
-    #             
+        new SocketIoAdaptor context

@@ -1,4 +1,6 @@
-BaseAdaptor = require './base-adaptor'
+BaseAdaptor  = require './base-adaptor'
+io           = require 'socket.io'
+SocketIoEdge = require '../edges/socket.io-edge'
 
 module.exports = class SocketIoAdaptor extends BaseAdaptor
 
@@ -6,45 +8,21 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
 
         console.log '\nSocketIoAdaptor() with:', @context
 
+        unless @context.listen and @context.listen.port
+
+            throw 'undefined listen.port'
 
 
+        @server = io.listen @context.listen.port, =>
 
-# io           = require 'socket.io'
-# Adaptor      = require '../adaptor'
-# SocketIoEdge = require '../edges/socket.io-edge'
+            if @context.listen.onListen
+            
+                @context.listen.onListen @server
 
+        @server.on 'connection', (socket) => 
 
-# class SocketIoAdaptor
+            @insertEdge SocketIoEdge, socket
 
-#     @listen: ( @context, onConnect ) ->
-
-#         console.log '\nSocketIoAdaptor().listen() with:', @context
-
-#         Adaptor.validate @opts, onConnect
-
-#         unless @opts.listen and @opts.listen.port
-
-#             throw 'undefined opts.port' 
-
-#         _adaptor = this
-
-#         server = io.listen @opts.listen.port, =>
-
-#             @opts.listen.onListen _adaptor if @opts.listen.onListen
-
-#         server.on 'connection', (socket) => 
-
-#             #
-#             # wrap connection socket into the Edge interface
-#             # and callback
-#             # 
-
-#             edge = new SocketIoEdge socket, @opts
-
-#             @opts.listen.onConnect edge if @opts.onConnect
-
-#             onConnect edge
-
-#         return server
-
-# module.exports = SocketIoAdaptor
+            if @context.listen.onConnect
+            
+                @context.listen.onConnect socket
