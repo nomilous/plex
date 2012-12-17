@@ -1,6 +1,14 @@
 child_process = require 'child_process'
 hound = require 'hound'
 
+docs = (after) ->
+    opts = ['src/*.coffee']
+    docco = child_process.spawn './node_modules/.bin/docco', opts
+    docco.stdout.pipe process.stdout
+    docco.stderr.pipe process.stderr
+    after()
+
+
 build = (after) ->
     coffeeOpts = ['-c', '-b', '-o', "lib", "src"]
     coffee = child_process.spawn './node_modules/.bin/coffee', coffeeOpts
@@ -51,6 +59,8 @@ task 'dev', "Continuous test code changes", ->
 task 'spec', "Run all tests", ->
   runSpec 'spec'
 
-
 task 'build', "Build all", ->
   build ->
+
+task 'docs', "Build docs", -> 
+  docs -> 
