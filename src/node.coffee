@@ -7,7 +7,6 @@ class Node
 
     @edges: {}
 
-
     @uplink: undefined
 
 
