@@ -1,4 +1,12 @@
-class Adaptor 
+class BaseAdaptor 
+
+    constructor: (@context) ->
+
+        console.log '\nBaseAdaptor() with:', @context
+
+        @validate @context
+
+        return @listen()
 
     validate: (context) ->     # , onConnect) -> 
 
@@ -9,6 +17,11 @@ class Adaptor
             throw 'adaptor requires context.listen.adaptor'
 
 
+    listen: -> 
+
+        console.log '\nBaseAdaptor().listen()'
+
+        
 
 
         #throw 'undefined onConnect(newEdge) callback' unless onConnect
@@ -34,4 +47,4 @@ class Adaptor
     #     onConnect newEdge
 
 
-module.exports = Adaptor
+module.exports = BaseAdaptor

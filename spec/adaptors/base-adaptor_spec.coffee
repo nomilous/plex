@@ -8,7 +8,6 @@ describe 'Adaptor', ->
 
         try
             adaptor = new BaseAdaptor
-            adaptor.validate()
 
         catch error
 
@@ -18,8 +17,7 @@ describe 'Adaptor', ->
     it 'throws if context.listen.adaptor is undefined', (done) -> 
 
         try
-            adaptor = new BaseAdaptor
-            adaptor.validate 
+            new BaseAdaptor
                 listen:
                     toMusic:
                         artist:    'Raimonds Tiguls'
@@ -32,3 +30,25 @@ describe 'Adaptor', ->
 
             error.should.match /adaptor requires context\.listen\.adaptor/
             done()
+
+
+    it 'listens', (done) ->
+
+        #
+        # override listen()
+        #
+        itListenend = false
+
+        BaseAdaptor.prototype.listen = -> itListenend = true
+
+        adaptor = new BaseAdaptor 
+            listen:
+                adaptor: {}
+
+        itListenend.should.equal true
+
+        done()
+
+
+
+

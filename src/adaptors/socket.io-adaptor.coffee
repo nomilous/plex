@@ -2,17 +2,9 @@ BaseAdaptor = require './base-adaptor'
 
 module.exports = class SocketIoAdaptor extends BaseAdaptor
 
-    constructor: (@context) ->
-
-        console.log '\nSocketIoAdaptor() with:', @context
-
-        return @listen()
-
     listen: ->
 
-        @validate @context
-
-
+        console.log '\nSocketIoAdaptor() with:', @context
 
 
 
