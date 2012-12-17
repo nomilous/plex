@@ -15,6 +15,8 @@ class SocketIoEdge extends Edge
 
         if @connection
 
+            @connection._edge = this if @connection
+
             #
             # temporary UNTESTED
             #
@@ -29,12 +31,19 @@ class SocketIoEdge extends Edge
 
                 return if @opts.mode == 'root'
 
+
+                id = @connection._edge.localId()
+                remoteEdge = @opts.edges[id].remoteEdge
+                
+                console.log "disconnect:", remoteEdge
+
                 @opts.uplink.send 'event:edge:disconnect'
 
                     a:
                         type: @opts.mode
                         globalId: @globalId()
-                    b: 'PENDING'
+                    b: remoteEdge
+
 
             @connection.on 'event:connect', (payload) => 
 
@@ -46,6 +55,19 @@ class SocketIoEdge extends Edge
 
                 else
 
+                    #
+                    # A leaf has attaced to this proxy
+                    # 
+                    # - save its edge details for use 
+                    #   on disconnect 
+
+                    localId = @connection._edge.localId()
+                    @opts.edges[localId].remoteEdge = payload
+
+                    #
+                    # inform uptree of new edge
+                    #
+                    
                     @opts.uplink.send 'event:edge:connect'
                         a: 
                             type: @opts.mode

@@ -37,6 +37,13 @@ class Edge
     
     constructor: (@connection, @opts = {}) ->
 
+        #
+        # Edge interface should attach reference to itself on
+        # the connection to enable behaviours on disconnect
+        #
+
+        @connection._edge = this if @connection
+
 
     connect: (onConnect) ->
 

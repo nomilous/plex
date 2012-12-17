@@ -44,3 +44,9 @@ describe 'Edge', ->
 
         done()
 
+    it 'attaches self to the connection connections', (done) ->
+
+        connection = {}
+        edge = new Edge connection, {}
+        connection._edge.should.not.be.undefined
+        done()
