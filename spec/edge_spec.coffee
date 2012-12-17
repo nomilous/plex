@@ -39,7 +39,6 @@ describe 'Edge', ->
             event: 'event:connect'
             payload:
                 type: 'proxy'
-                localId: 'LOCAL_ID'
                 globalId: @globalid
 
 

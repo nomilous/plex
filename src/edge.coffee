@@ -69,7 +69,6 @@ class Edge
         @send 'event:connect'
 
             type: @opts.mode
-            localId: @localId()
             globalId: @globalId() 
 
         
