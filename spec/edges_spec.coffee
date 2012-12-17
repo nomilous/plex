@@ -8,8 +8,8 @@ describe 'edges', ->
         edges.connect(
 
             connect:
-                adaptor: 'example'
-                
+                adaptor: 'base'
+
         ).should.eql 
 
             connected: true

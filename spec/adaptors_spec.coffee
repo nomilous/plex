@@ -8,7 +8,7 @@ describe 'adaptors', ->
         adaptors.listen(
 
             listen:
-                adaptor: 'example'
+                adaptor: 'base'
 
         ).should.eql 
 

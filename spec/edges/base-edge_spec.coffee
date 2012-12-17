@@ -1,5 +1,5 @@
 should = require 'should'
-Edge   = require '../lib/edge'
+Edge   = require '../../lib/edges/base-edge'
 os     = require 'os'
 
 describe 'Edge', ->

@@ -1,5 +1,5 @@
 should  = require 'should'
-Adaptor = require '../lib/adaptor'
+Adaptor = require '../../lib/adaptors/base-adaptor'
 
 describe 'Adaptor', -> 
 
