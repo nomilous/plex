@@ -93,7 +93,7 @@ class Edge
 
     #
     # edge must define globalId() to be unique throughout
-    # the entuie system
+    # the entire system
     # 
     # it defaults to hostname%pid
     #

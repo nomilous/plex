@@ -15,11 +15,24 @@ class SocketIoEdge extends Edge
 
         if @connection
 
-            console.log "INIT protocol"
-
             #
             # temporary UNTESTED
             #
+
+            @connection.on 'disconnect', =>
+
+                #
+                # child disconnected, propagate uptree
+                #
+
+                return if @opts.mode == 'root'
+
+                @opts.uplink.send 'event:edge:disconnect'
+
+                    a:
+                        type: @opts.mode
+                        globalId: @globalId()
+                    b: 'PENDING'
 
             @connection.on 'event:register', (payload) => 
 
@@ -31,17 +44,17 @@ class SocketIoEdge extends Edge
 
                 else
 
-                    @opts.uplink.send 'event:edge:create'
+                    @opts.uplink.send 'event:edge:connect'
                         a: 
                             type: @opts.mode
                             globalId: @globalId()
-                        b:
-                            payload
+                        b:  payload
+                            
 
 
                 console.log "recieve:", 'event:register', payload
 
-            @connection.on 'event:edge:create', (payload) => 
+            @connection.on 'event:edge:connect', (payload) => 
 
                 switch @opts.mode
 
@@ -53,17 +66,34 @@ class SocketIoEdge extends Edge
 
                         payload.proxied or= []
                         payload.proxied.push @globalId()
-                        @opts.uplink.send 'event:edge:create', payload
+                        @opts.uplink.send 'event:edge:connect', payload
 
                     when 'root'
 
-                        proxied = 'none'
-                        proxied = payload.proxied[0] if payload.proxied
-
-                        console.log "NEW EDGE %s:%s ---- %s:%s  proxied: %s ", 
+                        console.log "EDGE CONNECT -- %s:%s <> %s:%s", 
                         payload.a.type, payload.a.globalId, 
-                        payload.b.type, payload.b.globalId,
-                        proxied
+                        payload.b.type, payload.b.globalId
+                        
+
+            @connection.on 'event:edge:disconnect', (payload) =>
+
+                 switch @opts.mode
+
+                    when 'proxy'
+
+                        #
+                        # mark as passed through proxy
+                        #
+
+                        payload.proxied or= []
+                        payload.proxied.push @globalId()
+                        @opts.uplink.send 'event:edge:disconnect', payload
+
+                    when 'root'
+
+                        console.log "EDGE DISCONNECT -- %s:%s <> %s:%s", 
+                        payload.a.type, payload.a.globalId, 
+                        payload.b.type, payload.b.globalId
 
             return
 
