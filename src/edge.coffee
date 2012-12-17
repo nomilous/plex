@@ -44,7 +44,9 @@ class Edge
         # make pretend connection 
         # 
 
-        connectedThing = {}
+        connectedThing = {
+            id: 'LOCAL_ID'
+        }
         @connection = connectedThing
 
 
@@ -64,9 +66,10 @@ class Edge
 
     handshake: ->
 
-        @send 'event:register'
+        @send 'event:connect'
 
             type: @opts.mode
+            localId: @localId()
             globalId: @globalId() 
 
         

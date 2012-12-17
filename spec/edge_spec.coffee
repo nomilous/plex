@@ -34,13 +34,14 @@ describe 'Edge', ->
             connect: {}
 
         edge.connect()
-            
 
         edge.sentAmessage.should.eql
-            event: 'event:register'
+            event: 'event:connect'
             payload:
                 type: 'proxy'
+                localId: 'LOCAL_ID'
                 globalId: @globalid
+
 
         done()
 

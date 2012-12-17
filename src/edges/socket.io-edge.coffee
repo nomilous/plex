@@ -36,7 +36,7 @@ class SocketIoEdge extends Edge
                         globalId: @globalId()
                     b: 'PENDING'
 
-            @connection.on 'event:register', (payload) => 
+            @connection.on 'event:connect', (payload) => 
 
                 if @opts.mode == 'root'
 
@@ -54,7 +54,7 @@ class SocketIoEdge extends Edge
                             
 
 
-                console.log "recieve:", 'event:register', payload
+                console.log 'local  EDGE CONNECT', payload
 
             @connection.on 'event:edge:connect', (payload) => 
 
@@ -72,7 +72,7 @@ class SocketIoEdge extends Edge
 
                     when 'root'
 
-                        console.log "EDGE CONNECT -- %s:%s <> %s:%s", 
+                        console.log "remote EDGE CONNECT -- %s:%s <> %s:%s", 
                         payload.a.type, payload.a.globalId, 
                         payload.b.type, payload.b.globalId
                         
@@ -93,7 +93,7 @@ class SocketIoEdge extends Edge
 
                     when 'root'
 
-                        console.log "EDGE DISCONNECT -- %s:%s <> %s:%s", 
+                        console.log "remote EDGE DISCONNECT -- %s:%s <> %s:%s", 
                         payload.a.type, payload.a.globalId, 
                         payload.b.type, payload.b.globalId
 
