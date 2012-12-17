@@ -2,6 +2,9 @@ module.exports =
 
     listen: ( opts ) -> 
 
-        return 'adaptor'
+        klass = (require './plugin').load
 
-    
+            type: 'adaptor'
+            name: opts.listen.adaptor
+
+        return new klass opts

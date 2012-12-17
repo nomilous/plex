@@ -1,5 +1,10 @@
 module.exports = 
 
-    connect: (opts) -> 
+    connect: ( opts ) -> 
 
-        return 'edge'
+        klass = (require './plugin').load
+
+            type: 'edge'
+            name: opts.connect.adaptor
+
+        return new klass opts

@@ -5,5 +5,13 @@ describe 'adaptors', ->
 
     it '.listen() returns a listening adaptor', (done) -> 
 
-        adaptors.listen().should.equal 'adaptor'
+        adaptors.listen(
+
+            listen:
+                adaptor: 'example'
+
+        ).should.eql 
+
+            listening: true 
+
         done()
