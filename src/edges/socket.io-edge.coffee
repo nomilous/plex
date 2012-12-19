@@ -5,6 +5,8 @@ module.exports = class SocketIoEdge extends BaseEdge
 
     connect: (@context) -> 
 
+        #console.log 'SocketIoEdge.connect() with:', @context
+
         unless @context.connect and @context.connect.uri
         
             throw 'SocketIoEdge requires connect.uri'

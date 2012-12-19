@@ -8,15 +8,6 @@ describe 'proxy', ->
         proxy.start.should.be.an.instanceof Function
         done()
 
-    it 'throws on missing opts.connect', (done) -> 
-
-        try 
-            proxy.start {}
-
-        catch error
-
-            error.should.equal 'proxy requires opts.connect.adaptor parameters'
-            done()
 
     describe 'connects to parent', ->
 
@@ -41,7 +32,7 @@ describe 'proxy', ->
                 connect:
                     adaptor: 'socket.io'
                     uri: "http://localhost:#{ port }"
-                    onConnect: (connected) ->
+                    onConnect: (edge) ->
                         done()
 
                 listen: 
@@ -49,30 +40,30 @@ describe 'proxy', ->
                     port: 3001
     
 
-    describe 'it listens for children', (done) ->
+    # describe 'it listens for children', (done) ->
 
-        port = 3002
+    #     port = 3002
 
-        before (done) ->
+    #     before (done) ->
 
-            proxy.start
-                connect:
-                    adaptor: 'socket.io'
-                    uri: "http://localhost:3001"
-                listen: 
-                    adaptor: 'socket.io'
-                    port: port
+    #         proxy.start
+    #             connect:
+    #                 adaptor: 'socket.io'
+    #                 uri: "http://localhost:3001"
+    #             listen: 
+    #                 adaptor: 'socket.io'
+    #                 port: port
 
-            done()
+    #         done()
 
-        it 'can be connected to', (done) ->
+    #     it 'can be connected to', (done) ->
 
-            console.log "CONNECT"
+    #         console.log "CONNECT"
 
-            ioClient = require 'socket.io-client'
+    #         ioClient = require 'socket.io-client'
 
-            client = ioClient.connect "http://localhost:#{ port }"
+    #         client = ioClient.connect "http://localhost:#{ port }"
 
-            client.on 'connect', -> 
+    #         client.on 'connect', -> 
 
-                done()
+    #             done()

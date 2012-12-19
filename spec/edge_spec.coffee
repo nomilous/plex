@@ -12,6 +12,8 @@ describe 'edge', ->
 
         ).should.eql 
 
-            connected: true
+            context:
+                connect:
+                    adaptor: 'base'
 
         done()

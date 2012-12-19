@@ -12,6 +12,8 @@ describe 'adaptors', ->
 
         ).should.eql 
 
-            listening: true 
+            context:
+                listen: 
+                    adaptor: 'base' 
 
         done()

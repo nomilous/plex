@@ -5,11 +5,12 @@ module.exports =
     # plugin specified in `opts.connect.adaptor`
     # 
 
-    connect: ( opts ) -> 
+    connect: ( context ) -> 
 
         klass = (require './plugin').load
 
             type: 'edge'
-            name: opts.connect.adaptor
+            name: context.connect.adaptor
 
-        return new klass opts
+        edge = new klass
+        edge.connect context

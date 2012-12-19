@@ -6,7 +6,7 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
 
     listen: ->
 
-        console.log '\nSocketIoAdaptor() with:', @context
+        #console.log '\nSocketIoAdaptor() with:', @context
 
         unless @context.listen and @context.listen.port
 

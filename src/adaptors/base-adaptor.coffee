@@ -6,7 +6,7 @@ class BaseAdaptor
 
     constructor: (@context) ->
 
-        console.log '\nBaseAdaptor() with:', @context
+        #console.log '\nBaseAdaptor() with:', @context
 
         @validate @context
 
@@ -52,7 +52,7 @@ class BaseAdaptor
 
     listen: -> 
 
-        console.log '\nBaseAdaptor().listen()'
+        #console.log '\nBaseAdaptor().listen()'
 
         #
         # It pretends to enter a listen loop

@@ -13,7 +13,7 @@ module.exports = class Node
 
     constructor: -> 
 
-        console.log 'Node()'
+        #console.log 'Node()'
 
     #
     # `node.start()` **a new instance running**
@@ -23,7 +23,7 @@ module.exports = class Node
 
     start: ( opts = {} ) -> 
 
-        console.log '\nNode().start() with:', opts
+        #console.log '\nNode().start() with:', opts
 
         context = new (require './context') opts
 
@@ -81,7 +81,7 @@ module.exports = class Node
 
     listen: ( context ) -> 
 
-        console.log '\nNode().listen() with:', context
+        #console.log '\nNode().listen()'
 
         return ( require './adaptor' ).listen context
 
@@ -98,7 +98,7 @@ module.exports = class Node
 
     connect: ( context ) -> 
 
-        console.log 'Node().connect() with:', context
+        #console.log 'Node().connect()'
 
         return ( require './edge' ).connect context
 

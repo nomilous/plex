@@ -6,8 +6,7 @@ Node = require './node'
 
 module.exports = 
 
-    start : (opts) -> 
+    start: ( opts ) -> 
 
         return (new Node).start opts
-
-
+        
