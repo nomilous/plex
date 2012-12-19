@@ -1,7 +1,34 @@
-Edge     = require '../edge'
+BaseEdge     = require './base-edge'
 ioClient = require 'socket.io-client'
 
-module.exports = class SocketIoEdge extends Edge
+module.exports = class SocketIoEdge extends BaseEdge
+
+    connect: (@context) -> 
+
+        unless @context.connect and @context.connect.uri
+        
+            throw 'SocketIoEdge requires connect.uri'
+
+
+        @connection = ioClient.connect @context.connect.uri
+
+
+        #
+        # Override localId() to use the socket.io-client sessionid
+        #
+
+        @localId = -> @connection.socket.sessionid
+
+        @connection.on 'connect', =>
+
+            @handshake()
+
+            if @context.connect.onConnect instanceof Function
+
+                @context.connect.onConnect this
+
+        return this
+
 
     # constructor: (@connection, @opts = {}) ->
 
@@ -120,37 +147,5 @@ module.exports = class SocketIoEdge extends Edge
     #                     payload.b.type, payload.b.globalId
 
     #         return
-
-    #     unless @opts.connect and @opts.connect.uri
-
-    #         throw 'SocketIoEdge requires connect.uri'
-
-    # connect: (onConnect) ->
-
-    #     @isClient = true 
-
-    #     @connection = ioClient.connect @opts.connect.uri
-
-    #     # darn this
-    #     _mine = this
-
-    #     @connection.on 'connect', ->
-
-    #         _mine.handshake()
-
-    #         onConnect _mine
-
-    # send: ( event, payload ) -> 
-
-    #     console.log "send:", event, payload
-
-    #     @connection.emit event, payload
-
-    # localId: -> 
-
-    #     return @connection.id unless @isClient
-    #     return @connection.socket.sessionid
-
-
 
 

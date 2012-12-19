@@ -46,31 +46,7 @@ describe 'Edge', ->
 
     describe 'assign()', -> 
 
-        it 'sends handshake', (done) ->
-
-            sent = 1
-            edge = new Edge
-
-            context = 
-                mode: 'leaf'
-
-            connection = 
-                emit: (event, payload) ->
-                    sent =
-                        event: event
-                        payload: payload
-
-            edge.assign context, connection
-                
-
-            sent.should.eql 
-                event: 'event:connect'
-                payload:  
-                    mode: 'leaf'
-                    globalId: @globalid
-
-
-            done()
+        it 'pending'
 
 
     describe 'connect()', ->
@@ -79,6 +55,7 @@ describe 'Edge', ->
         sent = 1
         context = 
             mode: 'leaf'
+            globalId: -> 'GLOBAL_ID'
             connect:
                 adaptor: 'base'
                 mockConnection: 
@@ -107,7 +84,7 @@ describe 'Edge', ->
                 event: 'event:connect'
                 payload: 
                     mode: 'leaf', 
-                    globalId: @globalid
+                    globalId: 'GLOBAL_ID'
 
             done()
 
@@ -115,7 +92,8 @@ describe 'Edge', ->
     it 'defines localId()', (done) -> 
 
         edge = new Edge
-        context = {}
+        context = 
+            globalId: -> 'GLOBAL_ID'
         connection = 
             id: 'LOCAL_ID'
             emit: ->
@@ -123,11 +101,4 @@ describe 'Edge', ->
         edge.assign context, connection 
         edge.localId().should.equal 'LOCAL_ID'
         done()
-
-    
-    it 'defaults globalId() to hostname%pid', (done) ->
-
-        edge = new Edge
-        edge.globalId().should.equal @globalid
-        done() 
 

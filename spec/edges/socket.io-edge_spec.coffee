@@ -3,31 +3,31 @@ SocketIoEdge = require '../../lib/edges/socket.io-edge'
 
 describe 'SocketIoEdge', ->
 
+    describe 'as assigned at the server side', -> 
 
-    describe 'at the server side', -> 
+        sent = undefined
 
-        beforeEach -> 
+        beforeEach (done) -> 
+
+            context =
+                move: 'proxy'
+                globalId: -> 'GLOBAL_ID'
 
             mockSocket = 
-
-                #
-                # mock a connected instance of a socket.io socket
-                #
-
                 id: 'socket.io.id'
-                on: (event, payload) ->
-                emit: (event, payload) ->
 
-            @edge = new SocketIoEdge mockSocket 
+            @edge = (new SocketIoEdge).assign context, mockSocket
+
+            done()
 
 
         it 'uses the connected socket.io id as localId()', (done) ->
 
             @edge.localId().should.equal 'socket.io.id'
-            done()
-        
+            done()        
 
-    describe 'at the client side', -> 
+
+    describe 'as a connection to the server side', -> 
 
         server  = undefined
         port    = 3000
@@ -35,22 +35,31 @@ describe 'SocketIoEdge', ->
         before (done) ->
 
             @serversSocket = undefined
+            @handshake = undefined
 
             server = require('socket.io').listen port
 
             server.on 'connection', (connected) =>
+                console.log "CONNECTION"
                 @serversSocket = connected
+
+            server.on 'event:connect', (payload) =>
+                @handshake = payload
+
 
             done()
 
         after ->
 
-        #     # adaptor.close() 
 
         it 'throws on missing connect.uri', (done) ->
 
             try
-                edge = new SocketIoEdge null, {}
+                edge = (new SocketIoEdge).connect
+                    globalId: -> 'GLOBAL_ID'
+                    connect:
+                        adaptor: 'socket.io'
+
 
             catch error
 
@@ -59,21 +68,25 @@ describe 'SocketIoEdge', ->
 
 
 
-        it 'connects to the server using opts.connect if connected is null', (done) ->
+        it 'calls back to onConnect if defined and sends the handshake', (done) ->
 
-            edge = new SocketIoEdge null,
-                mode: 'proxy'
-                connect: 
-                    uri: "http://localhost:#{  port  }"
+            itCalledHandshake = false
 
-            edge.connect (newEdge) => 
+            SocketIoEdge.prototype.handshake = -> 
+                itCalledHandshake = true
 
-                serverID = @serversSocket.id
-                console.log "SERVER:", serverID
+            edge = (new SocketIoEdge).connect
+                mode: 'leaf'
+                globalId: -> 'GLOBAL_ID'
+                connect:
+                    uri: 'http://localhost:3000'
+                    onConnect: (edge) =>
+                        edge.connection.disconnect()
+                        itCalledHandshake.should.equal true
 
-                clientID = newEdge.localId()
-                console.log "CLIENT:", clientID
+                        serverID = @serversSocket.id
+                        clientID = edge.localId()
 
-                serverID.should.equal clientID
-                done()
+                        serverID.should.equal clientID
 
+                        done()

@@ -38,7 +38,7 @@ class BaseEdge
 
     assign: (@context, @connection) -> 
 
-        @handshake()
+        return this
 
 
     #
@@ -49,17 +49,7 @@ class BaseEdge
 
         @send 'event:connect',
             mode: @context.mode
-            globalId: @globalId()
-
-
-
-    #
-    # `edge.globalId()` **a globally unique id**
-    #
-
-    globalId: -> 
-
-        os.hostname() + '%' + process.pid
+            globalId: @context.globalId()
 
 
 
@@ -97,6 +87,8 @@ class BaseEdge
             @connection = @context.connect.mockConnection
             @handshake()
 
+
+        return this
 
     #
     # `edge.send()` **to send a message**
