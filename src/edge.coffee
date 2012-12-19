@@ -13,4 +13,5 @@ module.exports =
             name: context.connect.adaptor
 
         edge = new klass
-        edge.connect context
+        
+        return edge.connect context

@@ -30,7 +30,9 @@ class BaseAdaptor
 
     insertEdge: (edgeClass, connection) -> 
 
-        edge = new edgeClass connection
+        edge = new edgeClass
+
+        edge.assign @context, connection
 
         #
         # **TODO** The connecting edge may already be present,
@@ -42,10 +44,9 @@ class BaseAdaptor
 
         @context.edges[id] = edge
 
-        @context.uplink.send 'event:connect'
-
-            mode: @context.mode
-            globalId: @context.globalId()
+        # @context.uplink.send 'event:connect'
+        #     mode: @context.mode
+        #     globalId: @context.globalId()
 
         return edge
 

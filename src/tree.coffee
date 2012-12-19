@@ -12,15 +12,18 @@ class Tree
         # `tree.context` houses the [Context](context.html) 
         # of this [Node](node.html) 
         #
-        # `tree.edges` houses the list of adjacent Nodes
+        # `tree.edges.local` houses the list of adjacent Nodes
         # in the branch rooted at this Node
         #
+        # `tree.edges.remote` house remote edges (not adjacent)
 
-        @edges = {}
+        @edges = 
+            local: {}
+            remote: {}
 
 
     #
-    # `tree.insert()` **a new edge into the tree**
+    # `tree.insertLocal()` **a new edge into the tree**
     #
     # **localEdge** - expects the [Edge](edge.html) that represents
     # the localside of the connection.
@@ -29,7 +32,7 @@ class Tree
     # message that was sent by the remote side at handshake
     # 
 
-    insert: (localEdge, connectData) -> 
+    insertLocal: (localEdge, connectData) -> 
 
         #
         # Create a record of the edge
@@ -37,20 +40,37 @@ class Tree
 
         id = localEdge.localId()
 
-        @edges[ id ] = 
+        @edges.local[ id ] = 
 
             local: 
 
-                globalId: localEdge.globalId()
                 mode: @context.mode
+                globalId: @context.globalId()
+                
 
             remote: connectData
+
+        console.log 'tree', this.edges
 
         #
         # Send notification rootward
         #
 
-        @context.uplink.send 'event:edge:connect', @edges[ id ]
+        if @context.mode != 'root'
 
-        
+            @context.uplink.send 'event:edge:connect', @edges.local[ id ]
+
+    insertRemote: (connectData) ->
+
+        id = connectData.local.globalId
+
+        @edges.remote[ id ] = connectData
+
+        console.log 'tree', this.edges
+
+        if @context.mode != 'root'
+
+            @context.uplink.send 'event:edge:connect', @edges.remote[ id ]
+
+
 module.exports = Tree

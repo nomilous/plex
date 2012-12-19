@@ -60,6 +60,7 @@ describe 'Edge', ->
                 adaptor: 'base'
                 mockConnection: 
                     id: 'MOCK_ID'
+                    on: ->
                     emit: (event, payload) => 
                         sent =
                             event: event
@@ -96,9 +97,9 @@ describe 'Edge', ->
             globalId: -> 'GLOBAL_ID'
         connection = 
             id: 'LOCAL_ID'
+            on: ->
             emit: ->
 
         edge.assign context, connection 
         edge.localId().should.equal 'LOCAL_ID'
         done()
-

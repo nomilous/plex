@@ -25,7 +25,7 @@ module.exports = class Context
 
             @[property] = opts[property]
     
-        @tree = new (require './tree')
+        @tree = new (require './tree') this
 
 
 

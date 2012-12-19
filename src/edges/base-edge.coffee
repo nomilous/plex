@@ -34,9 +34,20 @@ class BaseEdge
     # 
     # This is used by adaptors to initialize this edge
     # with the an already established connection
+    # 
     #
 
     assign: (@context, @connection) -> 
+
+        @connection.on 'event:connect', (payload) => 
+
+            @context.tree.insertLocal this, payload
+
+
+        @connection.on 'event:edge:connect', (payload) => 
+
+            @context.tree.insertRemote payload
+
 
         return this
 
@@ -50,7 +61,6 @@ class BaseEdge
         @send 'event:connect',
             mode: @context.mode
             globalId: @context.globalId()
-
 
 
     #

@@ -17,7 +17,7 @@ describe 'Tree', ->
     it 'houses the collection of edges in the tree', (done) -> 
 
         tree = new Tree { con: 'TEXT' }
-        tree.edges.should.eql {}
+        tree.edges.should.eql { local: {}, remote: {}}
         done()
 
 
@@ -27,6 +27,7 @@ describe 'Tree', ->
 
             context = 
                 mode: 'proxy'
+                globalId: -> 'GID'
                 uplink:
                     send: (event, payload) -> 
                         sent = 
@@ -38,18 +39,17 @@ describe 'Tree', ->
 
             @localEdge = 
                 localId: -> 'localid'
-                globalId: -> 'GID'
             
             done()
 
 
 
-        describe 'insert(edge, connectData)', ->
+        describe 'insertLocal(edge, connectData)', ->
 
 
-            it 'adds an edge to the tree', (done) -> 
+            it 'adds a local edge to the tree', (done) -> 
 
-                tree.insert @localEdge,
+                tree.insertLocal @localEdge,
 
                     #
                     # remote edge event:connect payload
@@ -58,16 +58,16 @@ describe 'Tree', ->
                     mode: 'leaf'
                     globalId: 'remote_host:pid'
 
-                tree.edges.localid.local.mode.should.equal 'proxy'
-                tree.edges.localid.local.globalId.should.equal 'GID'
-                tree.edges.localid.remote.mode.should.equal 'leaf'
-                tree.edges.localid.remote.globalId.should.equal 'remote_host:pid'
+                tree.edges.local.localid.local.mode.should.equal 'proxy'
+                tree.edges.local.localid.local.globalId.should.equal 'GID'
+                tree.edges.local.localid.remote.mode.should.equal 'leaf'
+                tree.edges.local.localid.remote.globalId.should.equal 'remote_host:pid'
                 done()
 
 
             it "sends an 'event:node:connect' rootward", (done) -> 
 
-                tree.insert @localEdge,
+                tree.insertLocal @localEdge,
 
                     mode: 'leaf'
                     globalId: 'remote_host:pid'
@@ -85,6 +85,24 @@ describe 'Tree', ->
                             globalId: 'remote_host:pid'
 
                 done()
+
+
+
+            describe 'insertRemote()', -> 
+
+                it 'adds a remote edge', (done) -> 
+
+                    tree.insertRemote
+                        local: # nearest side of the remote edge
+                            mode: 'proxy'
+                            globalId: 'REMOTE_GLOBAL_ID'
+                        remote:
+                            mode: 'leaf'
+                            globalId: 'remote_host:pid'
+
+                    tree.edges.remote.REMOTE_GLOBAL_ID.local.globalId.should.equal 'REMOTE_GLOBAL_ID'
+
+                    done()
 
 
         describe 'remove(edge)', -> 
