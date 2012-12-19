@@ -1,31 +1,13 @@
 Node = require './node'
 
-class Proxy extends Node
+#
+# Start a Proxy node
+#
 
-    @start: ( opts = {} ) -> 
+module.exports = 
 
-        unless opts.connect and opts.connect.adaptor
+    start : (opts) -> 
 
-            throw 'proxy requires opts.connect.adaptor parameters'
-
-
-        unless opts.listen and opts.listen.adaptor
-
-            throw 'proxy requires opts.listen.adaptor parameters'
+        return (new Node).start opts
 
 
-        #
-        # start connect (parent)
-        #
-
-        @connect opts
-
-
-        #
-        # start listen (children)
-        #
-
-        @listen opts
-
-
-module.exports = Proxy

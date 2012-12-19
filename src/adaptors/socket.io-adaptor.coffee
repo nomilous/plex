@@ -17,12 +17,12 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
 
             if @context.listen.onListen
             
-                @context.listen.onListen @server
+                @context.listen.onListen this
 
         @server.on 'connection', (socket) => 
 
-            @insertEdge SocketIoEdge, socket
+            edge = @insertEdge SocketIoEdge, socket
 
             if @context.listen.onConnect
             
-                @context.listen.onConnect socket
+                @context.listen.onConnect edge

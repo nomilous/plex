@@ -1,113 +1,111 @@
 os = require 'os'
 
+#
+# Baseclass for an Edge
+# 
+
 class BaseEdge
-
-    #
-    # Base class / interface for an edge
-    # 
-    # - Represents a connection to another node
-    # 
-    # - Defines the abstraction necessary to
-    #   support multiple transport types in
-    #   the proxy tree.
-    # 
-
-
-    # 
-    # connection - Contains the connection object
-    #              to be wrapped into the edge 
-    #              interface. 
-    #             
-    # opts       - If connected is null the opts
-    #              are used to connect a new Edge
-    #              as follows:
-    # 
-    # 
-    #              // config step
-    #              edge = new Edge( null, {
-    #                  connect: { 
-    #                     /* parameters to connect */  
-    #                  } 
-    #              });
-    #
-    #              // connect with callback
-    #              edge.connect( function(connectedThing) {
-    #                  /* on connection established */
-    #              });
     
-    constructor: (@connection, @opts = {}) ->
+    #
+    # An Edge has two methods of contruction
+    # 
+    # 1. For the case of an incoming connection via an Adaptor
+    #    it should be initialized with the connection object.
+    # 
+    # 2. For the case establishing a connection to a remote
+    #    Adaptor the context should contain the connection
+    #    parameters in the context.connect property
+    #
 
-        #
-        # Edge interface should attach reference to itself on
-        # the connection to enable behaviours on disconnect
-        #
-
-        @connection._edge = this if @connection
-
-
-    connect: (onConnect) ->
-
-        #
-        # make pretend connection 
-        # 
-
-        connectedThing = {
-            id: 'LOCAL_ID'
-        }
-        @connection = connectedThing
+    constructor: (@connection, @context) ->
 
 
-        #
-        # TODO: onConnect callback in handshake success callback
-        #
+        console.log '\nBaseEdge() with:', @context
 
-        @handshake()
+        if @connection
 
+            #
 
-        #
-        # callback with self as connected Edge instance
-        #
+        else 
 
-        onConnect this if onConnect instanceof Function
+            @validate @context
 
 
-    handshake: ->
 
-        @send 'event:connect'
+    validate: (context) ->
 
-            type: @opts.mode
-            globalId: @globalId() 
+        throw 'undefined context' unless context
+
+        unless context.connnect and context.connect.adaptor
+            
+            throw 'edge requires connect.adaptor'
+
+
+
+
+    # connect: (onConnect) ->
+
+    #     #
+    #     # make pretend connection 
+    #     # 
+
+    #     connectedThing = {
+    #         id: 'LOCAL_ID'
+    #     }
+    #     @connection = connectedThing
+
+
+    #     #
+    #     # TODO: onConnect callback in handshake success callback
+    #     #
+
+    #     @handshake()
+
+
+    #     #
+    #     # callback with self as connected Edge instance
+    #     #
+
+    #     onConnect this if onConnect instanceof Function
+
+
+    # handshake: ->
+
+    #     @send 'event:connect'
+
+    #         type: @opts.mode
+    #         globalId: @globalId() 
 
         
-    send: (event, payload) -> 
+    # send: (event, payload) -> 
 
-        @sentAmessage = 
+    #     @sentAmessage = 
 
-            event: event
-            payload: payload
-
-
-
-    #
-    # edge defines localId()
-    # 
-    # - MUST be unique among all 
-    #   locally attached edges 
-    #
-
-    localId: -> 
-        return 'LOCAL_ID' unless @connection
-        @connection.id
+    #         event: event
+    #         payload: payload
 
 
-    #
-    # edge must define globalId() to be unique throughout
-    # the entire system
-    # 
-    # it defaults to hostname%pid
-    #
 
-    globalId: -> os.hostname() + '%' + process.pid
+    # #
+    # # edge defines localId()
+    # # 
+    # # - MUST be unique among all 
+    # #   locally attached edges 
+    # #
+
+    # localId: -> 
+    #     return 'LOCAL_ID' unless @connection
+    #     @connection.id
+
+
+    # #
+    # # edge must define globalId() to be unique throughout
+    # # the entire system
+    # # 
+    # # it defaults to hostname%pid
+    # #
+
+    # globalId: -> os.hostname() + '%' + process.pid
 
 
 

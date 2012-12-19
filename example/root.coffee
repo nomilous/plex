@@ -9,7 +9,7 @@ plex.start
         onListen: (adaptor) ->
 
 
-            console.log "ROOT listening:", adaptor
+            console.log "ROOT listening"
         
 
         onConnect: (edge) ->

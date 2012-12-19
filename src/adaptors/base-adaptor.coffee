@@ -1,10 +1,8 @@
 #
-# This is not a functioning Adaptor. It is used for testing purposes.
+# Base class for an Adaptor
 # 
 
-
 class BaseAdaptor 
-
 
     constructor: (@context) ->
 
@@ -48,6 +46,8 @@ class BaseAdaptor
 
             mode: @context.mode
             globalId: @context.globalId()
+
+        return edge
 
 
     listen: -> 
