@@ -17,96 +17,98 @@ class BaseEdge
     #    parameters in the context.connect property
     #
 
-    constructor: (@connection, @context) ->
-
-
-        console.log '\nBaseEdge() with:', @context
-
-        if @connection
-
-            #
-
-        else 
-
-            @validate @context
-
+    constructor: ->
 
 
     validate: (context) ->
 
         throw 'undefined context' unless context
 
-        unless context.connnect and context.connect.adaptor
+        unless context.connect and context.connect.adaptor
             
             throw 'edge requires connect.adaptor'
 
 
+    #
+    # `edge.assign()` **an existing connection**
+    # 
+    # This is used by adaptors to initialize this edge
+    # with the an already established connection
+    #
+
+    assign: (@context, @connection) -> 
+
+        @handshake()
 
 
-    # connect: (onConnect) ->
+    #
+    # `edge.handshake()` **sends event:connect to remote Adaptor**
+    #
 
-    #     #
-    #     # make pretend connection 
-    #     # 
+    handshake: -> 
 
-    #     connectedThing = {
-    #         id: 'LOCAL_ID'
-    #     }
-    #     @connection = connectedThing
-
-
-    #     #
-    #     # TODO: onConnect callback in handshake success callback
-    #     #
-
-    #     @handshake()
-
-
-    #     #
-    #     # callback with self as connected Edge instance
-    #     #
-
-    #     onConnect this if onConnect instanceof Function
-
-
-    # handshake: ->
-
-    #     @send 'event:connect'
-
-    #         type: @opts.mode
-    #         globalId: @globalId() 
-
-        
-    # send: (event, payload) -> 
-
-    #     @sentAmessage = 
-
-    #         event: event
-    #         payload: payload
+        @send 'event:connect',
+            mode: @context.mode
+            globalId: @globalId()
 
 
 
-    # #
-    # # edge defines localId()
-    # # 
-    # # - MUST be unique among all 
-    # #   locally attached edges 
-    # #
+    #
+    # `edge.globalId()` **a globally unique id**
+    #
 
-    # localId: -> 
-    #     return 'LOCAL_ID' unless @connection
-    #     @connection.id
+    globalId: -> 
+
+        os.hostname() + '%' + process.pid
 
 
-    # #
-    # # edge must define globalId() to be unique throughout
-    # # the entire system
-    # # 
-    # # it defaults to hostname%pid
-    # #
 
-    # globalId: -> os.hostname() + '%' + process.pid
+    #
+    # `edge.locaId()` **a locally unique id**
+    # 
+    # Implementation should override this
+    #
 
+    localId: -> 
+
+        @connection.id
+
+
+    #
+    # `edge.connect()` **to a remote adaptor**
+    # 
+    # Implementation should override this
+    #
+
+    connect: (@context) ->
+
+        console.log '\nBaseEdge.connect() with:', context
+
+        @validate @context
+
+        #
+        # It pretends to connect to a remote Adaptor
+        #
+
+        true == true == true == true
+
+        if @context.connect.mockConnection
+
+            @connection = @context.connect.mockConnection
+            @handshake()
+
+
+    #
+    # `edge.send()` **to send a message**
+    # 
+    # Implementation should override this.
+    # 
+
+    send: (event, payload) ->
+
+        console.log '\nBaseEdge.send() with:', event, payload
+
+        @connection.emit event, payload
 
 
 module.exports = BaseEdge

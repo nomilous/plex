@@ -12,7 +12,7 @@ describe 'Edge', ->
     it 'throws on undefined context', (done) -> 
 
         try
-            edge = new Edge
+            (new Edge).connect()
 
         catch error
 
@@ -22,62 +22,112 @@ describe 'Edge', ->
     it 'throws on undefined connect.adaptor', (done) ->
 
         try
-            edge = new Edge null, connect: {}
+            edge = new Edge
+            edge.connect 
+                connect: {}
 
         catch error
 
             error.should.equal 'edge requires connect.adaptor'
             done()
 
-    it 'does not validate if contructed with an exiting conneciton', (done) ->
 
-        edge = new Edge {}
+    it 'defines send()', (done) ->
 
-        #
-        # did not throw
-        #
-
+        edge = new Edge
+        edge.send.should.be.an.instanceof Function
         done()
 
+    it 'defines handshake()', (done) ->
 
-    xit 'has defines localId()', (done) -> 
+        edge = new Edge
+        edge.handshake.should.be.an.instanceof Function
+        done()
 
-        edge = new Edge()
+    describe 'assign()', -> 
+
+        it 'sends handshake', (done) ->
+
+            sent = 1
+            edge = new Edge
+
+            context = 
+                mode: 'leaf'
+
+            connection = 
+                emit: (event, payload) ->
+                    sent =
+                        event: event
+                        payload: payload
+
+            edge.assign context, connection
+                
+
+            sent.should.eql 
+                event: 'event:connect'
+                payload:  
+                    mode: 'leaf'
+                    globalId: @globalid
+
+
+            done()
+
+
+    describe 'connect()', ->
+
+        edge = undefined
+        sent = 1
+        context = 
+            mode: 'leaf'
+            connect:
+                adaptor: 'base'
+                mockConnection: 
+                    id: 'MOCK_ID'
+                    emit: (event, payload) => 
+                        sent =
+                            event: event
+                            payload: payload
+
+        beforeEach (done) -> 
+
+            edge = new Edge
+            edge.connect context
+            done()
+
+
+        it 'uses config in connect.adaptor', (done) -> 
+
+            edge.connection.id.should.equal 'MOCK_ID'
+            done()
+
+
+        it 'sends a handshake on connect', (done) ->
+
+            sent.should.eql 
+                event: 'event:connect'
+                payload: 
+                    mode: 'leaf', 
+                    globalId: @globalid
+
+            done()
+
+
+    it 'defines localId()', (done) -> 
+
+        edge = new Edge
+        context = {}
+        connection = 
+            id: 'LOCAL_ID'
+            emit: ->
+
+        edge.assign context, connection 
         edge.localId().should.equal 'LOCAL_ID'
         done()
 
-    xit 'can be initialized with a connected interface', (done) ->
-
-        edge = new Edge {id: 'ASSIGNED_OBJECT"s_ID' }
-        edge.localId().should.equal 'ASSIGNED_OBJECT"s_ID'
-        done()
     
-    xit 'defaults globalId() to hostname%pid', (done) ->
+    it 'defaults globalId() to hostname%pid', (done) ->
 
-        edge = new Edge()
-        edge.globalId().should.equal @globalid 
+        edge = new Edge
+        edge.globalId().should.equal @globalid
         done() 
 
-    xit 'sends registration when connecting as client', (done) -> 
-
-        edge = new Edge null,
-            mode: 'proxy'
-            connect: {}
-
-        edge.connect()
-
-        edge.sentAmessage.should.eql
-            event: 'event:connect'
-            payload:
-                type: 'proxy'
-                globalId: @globalid
-
-
-        done()
-
-    xit 'attaches self to the connection connections', (done) ->
-
-        connection = {}
-        edge = new Edge connection, {}
-        connection._edge.should.not.be.undefined
-        done()

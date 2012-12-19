@@ -55,7 +55,7 @@ class BaseAdaptor
         console.log '\nBaseAdaptor().listen()'
 
         #
-        # It pretens to enter a listen loop
+        # It pretends to enter a listen loop
         #
 
         true == true == true == true 
