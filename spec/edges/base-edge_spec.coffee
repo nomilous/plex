@@ -142,3 +142,37 @@ describe 'Edge', ->
 
         done()
 
+
+    it 'callback for a user configurable protocol providing subscribe() and publish() methods to implement', (done) -> 
+
+        edge = new Edge
+
+        mockConnection = on: ->
+
+        context = new (require '../../lib/context')
+
+            mode: 'proxy'
+            listen: 
+                adaptor: 'base'
+
+
+            protocol: (receive, send) -> 
+
+                # eg.
+
+                receive 'start', -> send 'myEVENT', 'hello'
+
+                receive 'myEventReply', (payload) ->  payload == 'hello you too'
+                   
+
+                receive.should.be.an.instanceof Function
+                send.should.be.an.instanceof Function
+                done()
+
+
+        edge.assign context, mockConnection
+
+        
+
+
+            

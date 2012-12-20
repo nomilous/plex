@@ -71,6 +71,7 @@ class BaseEdge
 
             #
             # Received notification of adjacent edge connecting
+            # ie. handshake is revceived here.
             #
 
             @context.tree.insertLocal this, payload
@@ -80,8 +81,9 @@ class BaseEdge
         subscribe 'event:edge:connect', (payload) => 
 
             #
-            # Received notification of remote edge connecting
-            #
+            # Received notification of remote edge
+            # being inserted into the tree.
+            # 
 
             @context.tree.insertRemote payload
 
@@ -89,10 +91,20 @@ class BaseEdge
         subscribe 'event:edge:disconnect', (payload) =>
 
             #
-            # Received notification of remote edge connecting
+            # Received notification of remote edge
+            # going offline.
             #
 
-            @context.tree.removeRemote payload  
+            @context.tree.removeRemote payload
+
+
+        if @context.protocol 
+
+            #
+            # Callback for userdefined protocol configuration
+            #
+
+            @context.protocol subscribe, @send
 
 
         return this
