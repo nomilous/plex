@@ -73,4 +73,29 @@ class Tree
             @context.uplink.send 'event:edge:connect', @edges.remote[ id ]
 
 
+    removeLocal: (localEdge) -> 
+
+        id = localEdge.localId()
+
+        @edges.local[ id ].disconnected = new Date()
+
+        if @context.mode != 'root'
+
+            @context.uplink.send 'event:edge:disconnect', @edges.local[ id ]
+
+
+    removeRemote: (disconnectData) -> 
+
+        id = disconnectData.local.globalId
+
+        @edges.remote[ id ] = disconnectData
+
+        console.log '\n\n\ntree', this.edges
+
+        if @context.mode != 'root'
+
+            @context.uplink.send 'event:edge:disconnect', @edges.remote[ id ]
+
+
+
 module.exports = Tree

@@ -41,12 +41,38 @@ class BaseEdge
 
         @connection.on 'event:connect', (payload) => 
 
+            #
+            # Received notification of adjacent edge connecting
+            #
+
             @context.tree.insertLocal this, payload
+
+
+        @connection.on 'disconnect', =>
+
+            #
+            # Received notification of adjacent edge disconnecting
+            #
+
+            @context.tree.removeLocal this
 
 
         @connection.on 'event:edge:connect', (payload) => 
 
+            #
+            # Received notification of remote edge connecting
+            #
+
             @context.tree.insertRemote payload
+
+
+        @connection.on 'event:edge:disconnect', (payload) =>
+
+            #
+            # Received notification of remote edge connecting
+            #
+
+            @context.tree.removeRemote payload  
 
 
         return this

@@ -88,7 +88,7 @@ describe 'Tree', ->
 
 
 
-            describe 'insertRemote()', -> 
+            describe 'insertRemote(edgeData)', -> 
 
                 it 'adds a remote edge', (done) -> 
 
@@ -105,9 +105,63 @@ describe 'Tree', ->
                     done()
 
 
-        describe 'remove(edge)', -> 
+            describe 'removeLocal(edge)', -> 
 
-            it 'marks an edge as disconnected'
+                it 'marks an edge as disconnected', (done) ->
+
+                    tree.insertLocal @localEdge,
+                        mode: 'leaf'
+                        globalId: 'remote_host:pid'
+
+                    tree.removeLocal @localEdge
+
+                    timestamp = tree.edges.local.localid.disconnected
+                    timestamp.getHours().should.equal (new Date()).getHours()
+                    done()
+
+                it "sends an 'event:node:disconnect' rootward", (done) -> 
+
+                    tree.insertLocal @localEdge,
+                        mode: 'leaf'
+                        globalId: 'remote_host:pid'
+
+                    tree.removeLocal @localEdge
+                
+                    sent.event.should.eql 'event:edge:disconnect'
+                    timestamp = sent.payload.disconnected
+                    timestamp.getHours().should.equal (new Date()).getHours()
+                    done()
+
+            describe 'removeRemote(edgeData)', ->
+
+                it 'updates the edgeData and informs the tree', (done) -> 
+
+                    now = new Date()
+
+                    tree.insertRemote
+                        local: # nearest side of the remote edge
+                            mode: 'proxy'
+                            globalId: 'REMOTE_GLOBAL_ID'
+                        remote:
+                            mode: 'leaf'
+                            globalId: 'remote_host:pid'
+
+                    tree.removeRemote
+                        local: # nearest side of the remote edge
+                            mode: 'proxy'
+                            globalId: 'REMOTE_GLOBAL_ID'
+                        remote:
+                            mode: 'leaf'
+                            globalId: 'remote_host:pid'
+                        disconnected: now
+
+
+                    tree.edges.remote.REMOTE_GLOBAL_ID.disconnected.should.not.be.undefined
+
+                    sent.event.should.eql 'event:edge:disconnect'
+                    sent.payload.disconnected.should.equal now
+                    done()
+
 
         describe 'has access to uplink SO THAT', ->
 
