@@ -21,12 +21,11 @@ module.exports = class SocketIoEdge extends BaseEdge
 
         @localId = -> @connection.socket.sessionid
 
-        @connection.on 'connect', =>
 
-            @handshake()
+        #
+        # Assign Plex Edge(ness) to the connection
+        #
 
-            if @context.connect.onConnect instanceof Function
-
-                @context.connect.onConnect this
+        @assign @context, @connection
 
         return this

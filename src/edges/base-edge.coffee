@@ -42,13 +42,19 @@ class BaseEdge
 
         subscribe = @getSubscriber()
 
-        subscribe 'event:connect', (payload) => 
+
+        subscribe 'connect', =>
 
             #
-            # Received notification of adjacent edge connecting
+            # Received notification of a connection
+            # being made.
             #
 
-            @context.tree.insertLocal this, payload
+            @handshake()
+
+            if @context.connect.onConnect instanceof Function
+
+                @context.connect.onConnect this
 
 
         subscribe 'disconnect', =>
@@ -58,6 +64,17 @@ class BaseEdge
             #
 
             @context.tree.removeLocal this
+
+
+
+        subscribe 'event:connect', (payload) => 
+
+            #
+            # Received notification of adjacent edge connecting
+            #
+
+            @context.tree.insertLocal this, payload
+
 
 
         subscribe 'event:edge:connect', (payload) => 

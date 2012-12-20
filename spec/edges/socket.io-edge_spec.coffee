@@ -14,6 +14,7 @@ describe 'SocketIoEdge', ->
                 globalId: -> 'GLOBAL_ID'
 
             mockSocket = 
+                on: (event, payload) ->
                 id: 'socket.io.id'
 
             @edge = (new SocketIoEdge).assign context, mockSocket
@@ -75,18 +76,19 @@ describe 'SocketIoEdge', ->
             SocketIoEdge.prototype.handshake = -> 
                 itCalledHandshake = true
 
-            edge = (new SocketIoEdge).connect
+            context = new (require '../../lib/context') 
                 mode: 'leaf'
                 globalId: -> 'GLOBAL_ID'
                 connect:
                     uri: 'http://localhost:3000'
                     onConnect: (edge) =>
-                        edge.connection.disconnect()
+
                         itCalledHandshake.should.equal true
 
                         serverID = @serversSocket.id
                         clientID = edge.localId()
-
                         serverID.should.equal clientID
 
                         done()
+
+            edge = (new SocketIoEdge).connect context
