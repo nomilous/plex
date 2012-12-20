@@ -30,4 +30,3 @@ module.exports = class SocketIoEdge extends BaseEdge
                 @context.connect.onConnect this
 
         return this
-

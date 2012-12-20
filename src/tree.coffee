@@ -50,8 +50,6 @@ class Tree
 
             remote: connectData
 
-        console.log 'tree', this.edges
-
         #
         # Send notification rootward
         #
@@ -60,17 +58,26 @@ class Tree
 
             @context.uplink.send 'event:edge:connect', @edges.local[ id ]
 
+        if @context.onChange and @context.onChange.localEdge
+
+            @context.onChange.localEdge @context, localEdge
+
+
+
+
     insertRemote: (connectData) ->
 
         id = connectData.local.globalId
 
         @edges.remote[ id ] = connectData
 
-        console.log 'tree', this.edges
-
         if @context.mode != 'root'
 
             @context.uplink.send 'event:edge:connect', @edges.remote[ id ]
+
+        if @context.onChange and @context.onChange.remoteEdge
+
+            @context.onChange.remoteEdge @context, connectData
 
 
     removeLocal: (localEdge) -> 
@@ -83,6 +90,10 @@ class Tree
 
             @context.uplink.send 'event:edge:disconnect', @edges.local[ id ]
 
+        if @context.onChange and @context.onChange.localEdge
+
+            @context.onChange.localEdge @context, localEdge
+
 
     removeRemote: (disconnectData) -> 
 
@@ -90,11 +101,13 @@ class Tree
 
         @edges.remote[ id ] = disconnectData
 
-        console.log '\n\n\ntree', this.edges
-
         if @context.mode != 'root'
 
             @context.uplink.send 'event:edge:disconnect', @edges.remote[ id ]
+
+        if @context.onChange and @context.onChange.remoteEdge
+
+            @context.onChange.remoteEdge @context, disconnectData
 
 
 

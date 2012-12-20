@@ -108,8 +108,6 @@ class BaseEdge
 
     connect: (@context) ->
 
-        console.log '\nBaseEdge.connect() with:', context
-
         @validate @context
 
         #
@@ -133,8 +131,6 @@ class BaseEdge
     # 
 
     send: (event, payload) ->
-
-        console.log '\nBaseEdge.send() with:', event, payload
 
         @connection.emit event, payload
 
