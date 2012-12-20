@@ -24,3 +24,12 @@ plex.start
 
         adaptor: 'socket.io'
         port: 3001
+
+
+    protocol: (receive, send) -> 
+
+        console.log "configure protocol"
+
+        receive 'connect', -> 
+
+            console.log 'CONNECT'
