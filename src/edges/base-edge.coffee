@@ -39,7 +39,10 @@ class BaseEdge
 
     assign: (@context, @connection) -> 
 
-        @connection.on 'event:connect', (payload) => 
+
+        subscribe = @getSubscriber()
+
+        subscribe 'event:connect', (payload) => 
 
             #
             # Received notification of adjacent edge connecting
@@ -48,7 +51,7 @@ class BaseEdge
             @context.tree.insertLocal this, payload
 
 
-        @connection.on 'disconnect', =>
+        subscribe 'disconnect', =>
 
             #
             # Received notification of adjacent edge disconnecting
@@ -57,7 +60,7 @@ class BaseEdge
             @context.tree.removeLocal this
 
 
-        @connection.on 'event:edge:connect', (payload) => 
+        subscribe 'event:edge:connect', (payload) => 
 
             #
             # Received notification of remote edge connecting
@@ -66,7 +69,7 @@ class BaseEdge
             @context.tree.insertRemote payload
 
 
-        @connection.on 'event:edge:disconnect', (payload) =>
+        subscribe 'event:edge:disconnect', (payload) =>
 
             #
             # Received notification of remote edge connecting
@@ -87,6 +90,25 @@ class BaseEdge
         @send 'event:connect',
             mode: @context.mode
             globalId: @context.globalId()
+
+
+    #
+    # `edge.getSubscriber()` **gets the event subscriber**
+    #
+    # This is an abstraction to enable Plex to define 
+    # a uniform interface onto the wire, agnostic of the 
+    # underlying transport implementation.
+    # 
+    # Implementation should override this.
+    #
+
+    getSubscriber: -> 
+
+        return (event, callback) => 
+
+            @connection.on.call @connection, event, callback
+
+
 
 
     #

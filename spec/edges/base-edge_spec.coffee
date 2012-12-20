@@ -103,3 +103,42 @@ describe 'Edge', ->
         edge.assign context, connection 
         edge.localId().should.equal 'LOCAL_ID'
         done()
+
+    it 'defines getSubscriber() to get the event subscriber from the underlying transport', (done) -> 
+
+        edge = 
+        subscribed = {}
+          
+        subscribeFn = (event, callback) ->
+
+            subscribed[event] = callback
+
+        publishFn = (event, payload) ->
+
+            'mock publish function' 
+
+        underlyingTransport =
+
+            #
+            # like socket.io
+            # subscriber is `socket.on( event, function( payload ) { } )`
+            # publisher is `socket.emit( event, payload )`
+            #
+
+            on: subscribeFn
+            emit: publishFn
+
+        
+        edge = (new Edge).assign context, underlyingTransport
+
+        myCallback = (payload) -> 
+            'i want EVENT events'
+
+        subscribe = edge.getSubscriber()
+
+        subscribe 'EVENT', myCallback
+
+        subscribed.EVENT.should.equal myCallback
+
+        done()
+
