@@ -1,14 +1,12 @@
 Node = require './node'
 
-class Leaf extends Node
+#
+# Start a Leaf node
+#
 
-    @start: ( opts = {} ) -> 
+module.exports = 
 
-        unless opts.connect and opts.connect.adaptor
+    start: ( opts ) -> 
 
-            throw 'proxy requires opts.connect.adaptor parameters'
+        return (new Node).start opts
 
-        @connect opts
-
-
-module.exports = Leaf

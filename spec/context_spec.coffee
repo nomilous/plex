@@ -15,7 +15,9 @@ describe 'Context', ->
     it 'contains reference to the Tree', (done) -> 
 
         context = new Context
-        context.tree.edges.should.eql {}
+        context.tree.edges.should.eql
+            local: {}
+            remote: {}
         done()
 
     it 'contains reference to all connected edge INSTANCES', (done) -> 
