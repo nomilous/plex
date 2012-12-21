@@ -1,6 +1,6 @@
 plex
 ====
 
-n-tier proxy tree for nodejs</br>
+n-tier proxy tree for nodejs<br />
 
-0.0.1 - alpha </br>
+0.0.1 - high alpha - api changes/deprecations without warning. <br />
