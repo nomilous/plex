@@ -67,7 +67,6 @@ class BaseEdge
             @context.tree.removeLocal this
 
 
-
         subscribe 'event:connect', (payload) => 
 
             #
@@ -76,7 +75,6 @@ class BaseEdge
             #
 
             @context.tree.insertLocal this, payload
-
 
 
         subscribe 'event:edge:connect', (payload) => 

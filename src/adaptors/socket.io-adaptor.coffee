@@ -2,6 +2,10 @@ BaseAdaptor  = require './base-adaptor'
 io           = require 'socket.io'
 SocketIoEdge = require '../edges/socket.io-edge'
 
+#
+# https://github.com/LearnBoost/socket.io/wiki/Exposed-events
+#
+
 module.exports = class SocketIoAdaptor extends BaseAdaptor
 
     listen: ->

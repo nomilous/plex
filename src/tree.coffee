@@ -84,6 +84,8 @@ class Tree
 
         id = localEdge.localId()
 
+        return unless @edges.local[ id ]
+
         @edges.local[ id ].disconnected = new Date()
 
         if @context.mode != 'root'

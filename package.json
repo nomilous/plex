@@ -1,7 +1,7 @@
 {
   "name": "plex",
-  "description": "n-tier proxy tree",
-  "version": "0.0.0",
+  "description": "n-tier proxy tree (alpha)",
+  "version": "0.0.1",
   "author": "nomilous <nomilous@gmail.com>",
   "contributors": [
     {

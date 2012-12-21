@@ -9,13 +9,13 @@ plex.start
 
             console.log '\n\n\n\nLOCAL EDGE CHANGE:', 
 
-                JSON.stringify context.tree.edges, null, 2
+                JSON.stringify context.tree.edges.local, null, 2
 
         remoteEdge: (context, edgeData) -> 
 
             console.log '\n\n\n\nREMOTE EDGE CHANGE:', 
 
-                JSON.stringify context.tree.edges, null, 2
+                JSON.stringify context.tree.edges.remote, null, 2
 
 
 

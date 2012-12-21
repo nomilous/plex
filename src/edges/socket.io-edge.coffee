@@ -1,6 +1,10 @@
 BaseEdge     = require './base-edge'
 ioClient = require 'socket.io-client'
 
+#
+# https://github.com/LearnBoost/socket.io/wiki/Exposed-events
+#
+
 module.exports = class SocketIoEdge extends BaseEdge
 
     connect: (@context) -> 
