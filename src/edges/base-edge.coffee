@@ -41,6 +41,7 @@ class BaseEdge
 
 
         subscribe = @getSubscriber()
+        publish   = @getPublisher()
 
 
         subscribe 'connect', =>
@@ -104,7 +105,7 @@ class BaseEdge
             # Callback for userdefined protocol configuration
             #
 
-            @context.protocol subscribe, @send
+            @context.protocol subscribe, publish
 
 
         return this
@@ -116,7 +117,7 @@ class BaseEdge
 
     handshake: -> 
 
-        @send 'event:connect',
+        @getPublisher() 'event:connect',
             mode: @context.mode
             globalId: @context.globalId()
 
@@ -137,7 +138,21 @@ class BaseEdge
 
             @connection.on.call @connection, event, callback
 
+    #
+    # `edge.getPublisher()` **gets the event publisher**
+    # 
+    # Abstaction onto the event sender.
+    # 
+    # Implementation should override this.
+    # 
 
+    getPublisher: -> 
+
+        return (event, payload) => 
+
+            console.log 'SENT %s - %s', event, JSON.stringify payload
+
+            @connection.emit.call @connection, event, payload
 
 
     #
@@ -172,18 +187,17 @@ class BaseEdge
             @connection = @context.connect.mockConnection
             @handshake()
 
-
         return this
 
-    #
-    # `edge.send()` **to send a message**
-    # 
-    # Implementation should override this.
-    # 
+    # #
+    # # `edge.send()` **to send a message**
+    # # 
+    # # Implementation should override this.
+    # # 
 
-    send: (event, payload) ->
+    # send: (event, payload) ->
 
-        @connection.emit event, payload
+    #     @connection.emit event, payload
 
 
 module.exports = BaseEdge

@@ -31,13 +31,6 @@ describe 'Edge', ->
             error.should.equal 'edge requires connect.adaptor'
             done()
 
-
-    it 'defines send()', (done) ->
-
-        edge = new Edge
-        edge.send.should.be.an.instanceof Function
-        done()
-
     it 'defines handshake()', (done) ->
 
         edge = new Edge
@@ -104,43 +97,65 @@ describe 'Edge', ->
         edge.localId().should.equal 'LOCAL_ID'
         done()
 
-    it 'defines getSubscriber() to get the event subscriber from the underlying transport', (done) -> 
 
-        edge = 
+    describe 'provides access to the underlyingTransport', -> 
+
+
+        edge = undefined
         subscribed = {}
-          
+        published = {}
+
         subscribeFn = (event, callback) ->
 
             subscribed[event] = callback
 
         publishFn = (event, payload) ->
 
-            'mock publish function' 
+            published[event] = payload
 
         underlyingTransport =
 
-            #
-            # like socket.io
-            # subscriber is `socket.on( event, function( payload ) { } )`
-            # publisher is `socket.emit( event, payload )`
-            #
+                #
+                # like socket.io
+                # subscriber is `socket.on( event, function( payload ) { } )`
+                # publisher is `socket.emit( event, payload )`
+                #
 
-            on: subscribeFn
-            emit: publishFn
+                on: subscribeFn
+                emit: publishFn
 
-        
-        edge = (new Edge).assign context, underlyingTransport
 
-        myCallback = (payload) -> 
-            'i want EVENT events'
+        beforeEach (done) -> 
 
-        subscribe = edge.getSubscriber()
+            edge = (new Edge).assign context, underlyingTransport
 
-        subscribe 'EVENT', myCallback
+            done()
 
-        subscribed.EVENT.should.equal myCallback
 
-        done()
+        it 'getSubscriber() returns the event listener', (done) -> 
+
+            myCallback = (payload) -> 
+                'i want EVENT events'
+
+            subscribe = edge.getSubscriber()
+
+            subscribe 'EVENT', myCallback
+
+            subscribed.EVENT.should.equal myCallback
+
+            done()
+
+        it 'defines getPublisher() to get the message emitter from the underlying protocol', (done) -> 
+
+            myPayload = {p:'PAYLOAD'}
+
+            publish = edge.getPublisher()
+
+            publish 'EVENT', myPayload
+
+            published.EVENT.should.eql myPayload
+
+            done()
 
 
     it 'callback for a user configurable protocol providing subscribe() and publish() methods to implement', (done) -> 

@@ -56,7 +56,7 @@ class Tree
 
         if @context.mode != 'root'
 
-            @context.uplink.send 'event:edge:connect', @edges.local[ id ]
+            @context.uplink.getPublisher() 'event:edge:connect', @edges.local[ id ]
 
         if @context.onChange and @context.onChange.localEdge
 
@@ -73,7 +73,7 @@ class Tree
 
         if @context.mode != 'root'
 
-            @context.uplink.send 'event:edge:connect', @edges.remote[ id ]
+            @context.uplink.getPublisher() 'event:edge:connect', @edges.remote[ id ]
 
         if @context.onChange and @context.onChange.remoteEdge
 
@@ -88,7 +88,7 @@ class Tree
 
         if @context.mode != 'root'
 
-            @context.uplink.send 'event:edge:disconnect', @edges.local[ id ]
+            @context.uplink.getPublisher() 'event:edge:disconnect', @edges.local[ id ]
 
         if @context.onChange and @context.onChange.localEdge
 
@@ -103,7 +103,7 @@ class Tree
 
         if @context.mode != 'root'
 
-            @context.uplink.send 'event:edge:disconnect', @edges.remote[ id ]
+            @context.uplink.getPublisher() 'event:edge:disconnect', @edges.remote[ id ]
 
         if @context.onChange and @context.onChange.remoteEdge
 

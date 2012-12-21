@@ -29,3 +29,10 @@ plex.start
         onConnect: (edge) ->
 
             console.log "ROOT got connection with id = %s", edge.localId()
+
+
+    protocol: (receive, send) ->
+
+        receive 'greeting', (payload) -> send 'greeting:ack', 'hello you too'
+
+        

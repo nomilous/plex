@@ -30,6 +30,8 @@ plex.start
 
         console.log "configure protocol"
 
-        receive 'connect', -> 
+        receive 'connect', -> send 'greeting', 'hello'
 
-            console.log 'CONNECT'
+        receive 'greeting:ack', (payload) -> 
+
+            console.log "RECEIVED greeting:ack - %s", JSON.stringify payload

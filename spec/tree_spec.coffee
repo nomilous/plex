@@ -29,7 +29,7 @@ describe 'Tree', ->
                 mode: 'proxy'
                 globalId: -> 'GID'
                 uplink:
-                    send: (event, payload) -> 
+                    getPublisher: -> return (event, payload) -> 
                         sent = 
                             event: event
                             payload: payload
