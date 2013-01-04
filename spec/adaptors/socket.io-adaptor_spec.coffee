@@ -3,7 +3,7 @@ SocketIoAdaptor = require '../../lib/adaptors/socket.io-adaptor'
 
 describe 'SocketIoAdaptor', ->
 
-    it 'throws if listen.port is undefined', (done) ->
+    it 'throws if listen.port is undefined', (pass) ->
 
         try 
             adaptor = new SocketIoAdaptor
@@ -12,11 +12,57 @@ describe 'SocketIoAdaptor', ->
 
         catch error
 
-            error.should.equal 'undefined listen.port'
+            error.should.equal 'requires listen.port or listen.server'
+            pass()
+
+    it 'does not throw if listen.server is defined', (done) ->
+
+        http = require('http')
+            .createServer( (req, res) -> )
+            .listen 3000 
+
+        try 
+            adaptor = new SocketIoAdaptor
+                listen:
+                    adaptor: 'socket.io'
+                    server: http
+
+        catch error
+            error.should.not.equal error
+            http.close()
             done()
 
+        http.close()
+        done()
 
-    it 'callsback to listen.onListen if defined', (done) -> 
+    it 'uses listen.app', (pass) -> 
+
+        http = require('http')
+            .createServer( (req, res) -> )
+            .listen 3000
+
+        adaptor = new SocketIoAdaptor
+            edges: {}
+            listen: 
+                adaptor: 'socket.io'
+                server: http
+                onConnect: (socket) ->
+
+                    #
+                    # the client connected... shutdown
+                    # 
+                    
+                    http.close()
+                    pass()
+
+        #
+        # connect the client
+        #
+
+        (require 'socket.io-client').connect "http://localhost:3000"
+
+
+    it 'callsback to listen.onListen if defined', (pass) -> 
 
         new SocketIoAdaptor
                 listen:
@@ -24,10 +70,10 @@ describe 'SocketIoAdaptor', ->
                     port: 3000
                     onListen: (server) -> 
                         #console.log '\nSERVER: ', server
-                        done()
+                        pass()
 
 
-    it 'callsback to listen.onConnect if defined', (done) ->
+    it 'callsback to listen.onConnect if defined', (pass) ->
 
         sent = 'nothing yet'
         context = new (require '../../lib/context')
@@ -49,6 +95,6 @@ describe 'SocketIoAdaptor', ->
 
                     #console.log '\nCONTEXT: ', context
                     #console.log '\nHANDSHAKE:', sent
-                    done()
+                    pass()
 
         new SocketIoAdaptor context

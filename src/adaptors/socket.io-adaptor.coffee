@@ -10,18 +10,54 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
 
     listen: ->
 
+        #
+        # Can be initialized with either a port to listen
+        # on or an app (eg. express)
+        #
+        # <pre>
+        # 
+        # express = require 'express'
+        # app = express()
+        # server = app.listen 3000
+        #  
+        # plex.start
+        #   ..
+        #   ..
+        #   listen:
+        #     adaptor: 'socket.io'
+        #     server: server
+        #   ..
+        #   ..
+        # </pre>
+        # 
+        # 
+
         #console.log '\nSocketIoAdaptor() with:', @context
 
-        unless @context.listen and @context.listen.port
+        unless @context.listen
 
-            throw 'undefined listen.port'
+            throw 'requires listen config'
 
+        unless @context.listen.port or @context.listen.server
 
-        @server = io.listen @context.listen.port, =>
+            throw 'requires listen.port or listen.server'
 
-            if @context.listen.onListen
-            
-                @context.listen.onListen this
+        if @context.listen.port
+
+            @server = io.listen @context.listen.port, =>
+
+                if @context.listen.onListen
+                
+                    @context.listen.onListen this
+
+        if @context.listen.server
+
+            @server = io.listen @context.listen.server, =>
+
+                if @context.listen.onListen
+                
+                    @context.listen.onListen this
+
 
         @server.on 'connection', (socket) => 
 
