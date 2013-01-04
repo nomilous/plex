@@ -42,12 +42,22 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
 
             throw 'requires listen.port or listen.app'
 
+        if @context.listen.port
 
-        @server = io.listen @context.listen.port, =>
+            @server = io.listen @context.listen.port, =>
 
-            if @context.listen.onListen
-            
-                @context.listen.onListen this
+                if @context.listen.onListen
+                
+                    @context.listen.onListen this
+
+        if @context.listen.app
+
+            @server = io.listen @context.listen.app, =>
+
+                if @context.listen.onListen
+                
+                    @context.listen.onListen this
+
 
         @server.on 'connection', (socket) => 
 

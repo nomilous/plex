@@ -3,7 +3,7 @@ SocketIoAdaptor = require '../../lib/adaptors/socket.io-adaptor'
 
 describe 'SocketIoAdaptor', ->
 
-    it 'throws if listen.port is undefined', (done) ->
+    xit 'throws if listen.port is undefined', (done) ->
 
         try 
             adaptor = new SocketIoAdaptor
@@ -15,22 +15,54 @@ describe 'SocketIoAdaptor', ->
             error.should.equal 'requires listen.port or listen.app'
             done()
 
-    it 'does not throw if listen.app is defined', (done) ->
+    xit 'does not throw if listen.app is defined', (done) ->
+
+        http = require('http')
+            .createServer( (req, res) -> )
+            .listen 3000 
 
         try 
             adaptor = new SocketIoAdaptor
                 listen:
                     adaptor: 'socket.io'
-                    app: {}
+                    app: http
 
         catch error
             error.should.not.equal error
+            http.close()
             done()
 
+        http.close()
         done()
 
+    it 'uses listen.app', (done) -> 
 
-    it 'callsback to listen.onListen if defined', (done) -> 
+        http = require('http')
+            .createServer( (req, res) -> )
+            .listen 3000
+
+        adaptor = new SocketIoAdaptor
+            edges: {}
+            listen: 
+                adaptor: 'socket.io'
+                app: http
+                onConnect: (socket) ->
+
+                    #
+                    # the client connected... shutdown
+                    # 
+                    
+                    http.close()
+                    done()
+
+        #
+        # connect the client
+        #
+
+        (require 'socket.io-client').connect "http://localhost:3000"
+
+
+    xit 'callsback to listen.onListen if defined', (done) -> 
 
         new SocketIoAdaptor
                 listen:
@@ -41,7 +73,7 @@ describe 'SocketIoAdaptor', ->
                         done()
 
 
-    it 'callsback to listen.onConnect if defined', (done) ->
+    xit 'callsback to listen.onConnect if defined', (done) ->
 
         sent = 'nothing yet'
         context = new (require '../../lib/context')
