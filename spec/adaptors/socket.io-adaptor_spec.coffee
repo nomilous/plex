@@ -3,7 +3,7 @@ SocketIoAdaptor = require '../../lib/adaptors/socket.io-adaptor'
 
 describe 'SocketIoAdaptor', ->
 
-    xit 'throws if listen.port is undefined', (done) ->
+    xit 'throws if listen.port is undefined', (pass) ->
 
         try 
             adaptor = new SocketIoAdaptor
@@ -13,9 +13,9 @@ describe 'SocketIoAdaptor', ->
         catch error
 
             error.should.equal 'requires listen.port or listen.app'
-            done()
+            pass()
 
-    xit 'does not throw if listen.app is defined', (done) ->
+    it 'does not throw if listen.app is defined', (done) ->
 
         http = require('http')
             .createServer( (req, res) -> )
@@ -35,7 +35,7 @@ describe 'SocketIoAdaptor', ->
         http.close()
         done()
 
-    it 'uses listen.app', (done) -> 
+    it 'uses listen.app', (pass) -> 
 
         http = require('http')
             .createServer( (req, res) -> )
@@ -53,7 +53,7 @@ describe 'SocketIoAdaptor', ->
                     # 
                     
                     http.close()
-                    done()
+                    pass()
 
         #
         # connect the client
@@ -62,7 +62,7 @@ describe 'SocketIoAdaptor', ->
         (require 'socket.io-client').connect "http://localhost:3000"
 
 
-    xit 'callsback to listen.onListen if defined', (done) -> 
+    it 'callsback to listen.onListen if defined', (pass) -> 
 
         new SocketIoAdaptor
                 listen:
@@ -70,10 +70,10 @@ describe 'SocketIoAdaptor', ->
                     port: 3000
                     onListen: (server) -> 
                         #console.log '\nSERVER: ', server
-                        done()
+                        pass()
 
 
-    xit 'callsback to listen.onConnect if defined', (done) ->
+    it 'callsback to listen.onConnect if defined', (pass) ->
 
         sent = 'nothing yet'
         context = new (require '../../lib/context')
@@ -95,6 +95,6 @@ describe 'SocketIoAdaptor', ->
 
                     #console.log '\nCONTEXT: ', context
                     #console.log '\nHANDSHAKE:', sent
-                    done()
+                    pass()
 
         new SocketIoAdaptor context
