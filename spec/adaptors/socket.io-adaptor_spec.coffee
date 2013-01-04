@@ -12,8 +12,22 @@ describe 'SocketIoAdaptor', ->
 
         catch error
 
-            error.should.equal 'undefined listen.port'
+            error.should.equal 'requires listen.port or listen.app'
             done()
+
+    it 'does not throw if listen.app is defined', (done) ->
+
+        try 
+            adaptor = new SocketIoAdaptor
+                listen:
+                    adaptor: 'socket.io'
+                    app: {}
+
+        catch error
+            error.should.not.equal error
+            done()
+
+        done()
 
 
     it 'callsback to listen.onListen if defined', (done) -> 
