@@ -3,7 +3,7 @@ SocketIoAdaptor = require '../../lib/adaptors/socket.io-adaptor'
 
 describe 'SocketIoAdaptor', ->
 
-    xit 'throws if listen.port is undefined', (pass) ->
+    it 'throws if listen.port is undefined', (pass) ->
 
         try 
             adaptor = new SocketIoAdaptor
