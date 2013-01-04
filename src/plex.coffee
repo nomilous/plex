@@ -17,9 +17,9 @@ plex =
 
                 if opts.mode == 'root' or opts.mode == 'proxy'
 
-                    unless opts.listen.port
+                    unless opts.listen.port or opts.listen.app
                     
-                        throw 'plex root|proxy with socket.io requires opts.listen.port'
+                        throw 'plex root|proxy with socket.io requires opts.listen.port or opts.listen.app'
 
         server = require "./#{  opts.mode  }"
 
