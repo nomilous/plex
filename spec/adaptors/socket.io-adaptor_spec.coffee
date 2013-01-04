@@ -12,10 +12,10 @@ describe 'SocketIoAdaptor', ->
 
         catch error
 
-            error.should.equal 'requires listen.port or listen.app'
+            error.should.equal 'requires listen.port or listen.server'
             pass()
 
-    it 'does not throw if listen.app is defined', (done) ->
+    it 'does not throw if listen.server is defined', (done) ->
 
         http = require('http')
             .createServer( (req, res) -> )
@@ -25,7 +25,7 @@ describe 'SocketIoAdaptor', ->
             adaptor = new SocketIoAdaptor
                 listen:
                     adaptor: 'socket.io'
-                    app: http
+                    server: http
 
         catch error
             error.should.not.equal error
@@ -45,7 +45,7 @@ describe 'SocketIoAdaptor', ->
             edges: {}
             listen: 
                 adaptor: 'socket.io'
-                app: http
+                server: http
                 onConnect: (socket) ->
 
                     #

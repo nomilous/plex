@@ -18,14 +18,14 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
         # 
         # express = require 'express'
         # app = express()
-        # app.listen 3000
+        # server = app.listen 3000
         #  
         # plex.start
         #   ..
         #   ..
         #   listen:
         #     adaptor: 'socket.io'
-        #     app: app
+        #     server: server
         #   ..
         #   ..
         # </pre>
@@ -38,9 +38,9 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
 
             throw 'requires listen config'
 
-        unless @context.listen.port or @context.listen.app
+        unless @context.listen.port or @context.listen.server
 
-            throw 'requires listen.port or listen.app'
+            throw 'requires listen.port or listen.server'
 
         if @context.listen.port
 
@@ -50,9 +50,9 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
                 
                     @context.listen.onListen this
 
-        if @context.listen.app
+        if @context.listen.server
 
-            @server = io.listen @context.listen.app, =>
+            @server = io.listen @context.listen.server, =>
 
                 if @context.listen.onListen
                 
