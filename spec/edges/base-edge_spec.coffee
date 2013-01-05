@@ -158,7 +158,8 @@ describe 'Edge', ->
             done()
 
 
-    it 'callback for a user configurable protocol providing subscribe() and publish() methods to implement', (done) -> 
+    it """callsback for a user configurable protocol 
+          providing subscribe() and publish() and context""", (done) -> 
 
         edge = new Edge
 
@@ -171,7 +172,7 @@ describe 'Edge', ->
                 adaptor: 'base'
 
 
-            protocol: (receive, send) -> 
+            protocol: (receive, send, contxt) -> 
 
                 # eg.
 
@@ -182,6 +183,7 @@ describe 'Edge', ->
 
                 receive.should.be.an.instanceof Function
                 send.should.be.an.instanceof Function
+                contxt.should.equal context
                 done()
 
 
