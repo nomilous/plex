@@ -103,7 +103,7 @@ class BaseEdge
             # Callback for userdefined protocol configuration
             #
 
-            @context.protocol subscribe, publish, @context
+            @context.protocol subscribe, publish, this, @context
 
 
         return this
