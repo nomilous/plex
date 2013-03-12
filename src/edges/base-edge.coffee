@@ -76,7 +76,7 @@ class BaseEdge
 
             @context.tree.insertLocal this, payload
 
-            if payload.secret
+            if @context.secret
 
                 if payload.secret != @context.secret
 
