@@ -118,6 +118,7 @@ class BaseEdge
         @getPublisher() 'event:connect',
             mode: @context.mode
             globalId: @context.globalId()
+            secret: @context.secret
 
 
     #
