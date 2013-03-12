@@ -1,8 +1,13 @@
+#!/usr/bin/env coffee
+
 plex = require '../lib/plex'
 
 plex.start
 
     mode: 'leaf'
+
+    secret: 'SEEKRIT'
+    
     connect:
 
         #

@@ -76,6 +76,16 @@ class BaseEdge
 
             @context.tree.insertLocal this, payload
 
+            if payload.secret
+
+                if payload.secret != @context.secret
+
+                    @connection.disconnect()
+
+                    #
+                    # TODO: clean up rejected connection
+                    #
+
 
         subscribe 'event:edge:connect', (payload) => 
 
