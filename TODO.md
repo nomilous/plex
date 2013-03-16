@@ -3,8 +3,6 @@ Todo
 
 ### pending version 0.0.6
 
-* enable `plex.start new (class MyNode extends plex.Node)`
-
 * per adaptor/edge secrets
 
 * Properly disconnect (clean up tree)

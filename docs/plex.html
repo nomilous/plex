@@ -28,6 +28,16 @@ plex.start
 </pre>             </td>             <td class="code">               <div class="highlight"><pre>    
     <span class="nv">start: </span><span class="nf">( opts = {} ) -&gt;</span> 
 
+        <span class="k">if</span> <span class="k">typeof</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">config</span> <span class="o">!=</span> <span class="s">&#39;undefined&#39;</span>
+
+            <span class="nv">node = </span><span class="nx">opts</span>
+            <span class="nv">opts = </span><span class="nx">node</span><span class="p">.</span><span class="nx">config</span><span class="p">()</span>
+
+        <span class="k">else</span>
+
+            <span class="nv">node = </span><span class="k">new</span> <span class="nx">Node</span>
+
+
         <span class="nx">plex</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">validate</span> <span class="nx">opts</span>
 
         <span class="k">if</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">listen</span>
@@ -46,7 +56,7 @@ plex.start
             <span class="nv">opts.mode = </span><span class="s">&#39;leaf&#39;</span>
 
 
-        <span class="k">return</span> <span class="p">(</span><span class="k">new</span> <span class="nx">Node</span><span class="p">).</span><span class="nx">start</span> <span class="nx">opts</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>questionable as necessary?:</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">supportedAdaptors: </span><span class="s">&#39;socket.io&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><strong>class</strong> <code>plex.Node</code> </p>
+        <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">start</span> <span class="nx">opts</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>questionable as necessary?:</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">supportedAdaptors: </span><span class="s">&#39;socket.io&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><strong>class</strong> <code>plex.Node</code> </p>
 
 <ul>
 <li>Returns the <a href="node.html">Node</a> class for extension</li>
@@ -66,7 +76,7 @@ class MyNode extends plex.Node
         # assemble @opts from args
         #
 
-node = new MyNode { my: 'args' }
+node = new MyNode 'my', 'args'
 plex.start node
 
 </pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">Node: </span><span class="nx">Node</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p><strong>literal</strong> <code>plex.opts</code></p>
