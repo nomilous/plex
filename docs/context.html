@@ -6,7 +6,7 @@ components for <a href="plex.html">Plex</a> to function.</p>
 
 <p><code>context.tree</code> A reference to the <a href="tree.html">Tree</a></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">os = </span><span class="nx">require</span> <span class="s">&#39;os&#39;</span>
 
-<span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">Context</span>
+<span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">Context</span> <span class="k">extends</span> <span class="nx">require</span><span class="p">(</span><span class="s">&#39;events&#39;</span><span class="p">).</span><span class="nx">EventEmitter</span>
 
     <span class="nv">constructor: </span><span class="nf">( opts = {} ) -&gt;</span> 
 
