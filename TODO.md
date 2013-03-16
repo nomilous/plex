@@ -16,7 +16,7 @@ Todo
 * Tag each node (allow multiple tags per node)
 * Maintain Routing knowledge (for broadcast to all with 'tag')
 
-* modify proxy_reconnect / remote_edge_change to properly propagate nested changes that ocurred while the rootward link was severed such that new or departed leaves are not known to the root (it makes sense to only propagate globalid/label/tags more than one tier rootward)
+* modify proxy_reconnect / remote_edge_change to properly propagate nested changes that ocurred while the rootward link was severed such that new or departed leaves not known to the root become known (it makes sense to only propagate globalid/label/tags more than one tier rootward)
 
 * third argument to protocol to enable interaction with node context within protocol handlers
 
