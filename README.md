@@ -4,3 +4,41 @@ plex
 n-tier proxy tree for nodejs<br />
 
 0.0.5 - high alpha - api changes/deprecations without warning. <br />
+
+
+### Install
+
+```bash
+npm install plex --save
+```
+
+
+### Usage (basic)
+
+```coffee
+
+require('plex').start
+
+    secret: 'SEEKRIT'
+
+    connect:
+
+        #
+        # establish connection to parent proxy
+        #
+
+        adaptor: 'socket.io'
+        uri: 'https://rootward.proxy:10001'
+
+    listen:
+
+        #
+        # listen for children
+        #
+
+        adaptor: 'socket.io'
+
+        port: 10002  
+        # OR server: myHttpsServer
+
+```

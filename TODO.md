@@ -5,6 +5,8 @@ Todo
 
 * enable `plex.start new (class MyNode extends plex.Node)`
 
+* per adaptor/edge secrets
+
 * Properly disconnect (clean up tree)
 * Properly disconnect on failed secret
 
