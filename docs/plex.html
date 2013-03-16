@@ -33,17 +33,7 @@ plex.start node
 
     <span class="nv">start: </span><span class="nf">( opts = {} ) -&gt;</span> 
 
-        <span class="nx">unless</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">listen</span> <span class="o">or</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">connect</span>
-
-            <span class="k">throw</span> <span class="s">&#39;plex requires opts.connect and|or opts.listen&#39;</span>
-
-        <span class="k">for</span> <span class="nx">edge</span> <span class="k">in</span> <span class="p">[</span><span class="s">&#39;connect&#39;</span><span class="p">,</span> <span class="s">&#39;listen&#39;</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="nx">opts</span><span class="p">[</span><span class="nx">edge</span><span class="p">]</span>
-
-                <span class="nx">unless</span> <span class="nx">opts</span><span class="p">[</span><span class="nx">edge</span><span class="p">].</span><span class="nx">adaptor</span>
-
-                    <span class="k">throw</span> <span class="s">&quot;plex requires opts.</span><span class="si">#{</span> <span class="nx">edge</span> <span class="si">}</span><span class="s">.adaptor&quot;</span>
+        <span class="nx">plex</span><span class="p">.</span><span class="nx">opts</span><span class="p">.</span><span class="nx">validate</span> <span class="nx">opts</span>
 
         <span class="k">if</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">listen</span>
 
