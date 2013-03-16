@@ -67,8 +67,8 @@ class MyNode extends plex.Node
     constructor: (args)
 
         #
-        # args should assemble the 
-        # necessary @opts
+        # constructor should assemble
+        # the necessary @opts
         #
 
 
