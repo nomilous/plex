@@ -5,7 +5,7 @@ Todo
 
 * per adaptor/edge secrets
 
-* node is an event emitter
+* context events
 
 * Properly disconnect (clean up tree)
 * Properly disconnect on failed secret
