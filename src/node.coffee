@@ -3,7 +3,7 @@
 # running [Plex](plex.html) instance.
 #
 
-module.exports = class Node
+module.exports = class Node extends require('events').EventEmitter
 
     constructor: -> 
 
