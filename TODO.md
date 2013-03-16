@@ -3,6 +3,8 @@ Todo
 
 ### pending version 0.0.6
 
+* expand plugin to support 3rd party local override or installed module
+
 * per adaptor/edge secrets
 
 * context events
