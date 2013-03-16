@@ -5,6 +5,11 @@ describe 'Context', ->
 
     it 'contains the runtime / support context for plex'
 
+    it 'is an event emitter', (done) ->
+
+        Context.prototype.on.should.equal require('events').EventEmitter.prototype.on
+        done()
+
     it 'is extended with all config', (done) -> 
 
         config = thing: 'a'

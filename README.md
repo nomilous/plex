@@ -72,7 +72,8 @@ class MyNode extends plex.Node
         #
 
 
-plex.start new MyNode my: 'args'
+context = plex.start new MyNode my: 'args'
+
 
 ```
 

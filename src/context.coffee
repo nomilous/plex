@@ -12,7 +12,7 @@
 
 os = require 'os'
 
-module.exports = class Context
+module.exports = class Context extends require('events').EventEmitter
 
     constructor: ( opts = {} ) -> 
 

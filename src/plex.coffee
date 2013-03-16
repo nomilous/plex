@@ -89,10 +89,12 @@ plex =
     #         #
     #
     # node = new MyNode 'my', 'args'
-    # plex.start node
+    # context = plex.start node
     #
     # </pre>
     #
+    # see [Context](context.html)
+    # 
 
     Node: Node
 
