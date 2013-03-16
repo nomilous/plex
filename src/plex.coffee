@@ -1,4 +1,5 @@
 Node = require './node'
+opts = require './opts'
 
 plex = 
 
@@ -13,7 +14,7 @@ plex =
     # * Returns the [Node](node.html) class for extension
     # * Constructor should assemble [opts](opts.html) 
     #
-    # **Usage**
+    # #### *Usage*
     #
     # <pre>
     # plex = require 'plex'
@@ -34,19 +35,20 @@ plex =
 
     Node: Node
 
+
+    #
+    # **literal** `plex.opts`
+    # 
+    # * Returns [opts](opts.html) object literal
+    # 
+    # 
+
+    opts: opts
+
+
     start: ( opts = {} ) -> 
 
-        unless opts.listen or opts.connect
-
-            throw 'plex requires opts.connect and|or opts.listen'
-
-        for edge in ['connect', 'listen']
-
-            if opts[edge]
-
-                unless opts[edge].adaptor
-
-                    throw "plex requires opts.#{ edge }.adaptor"
+        plex.opts.validate opts
 
         if opts.listen
 

@@ -1,28 +1,19 @@
 should = require 'should'
 plex   = require '../lib/plex'
 
-describe 'plex', -> 
+describe 'plex', ->
 
-    it 'throws if neither opts.listen or opts.connect is defined', (done) -> 
+    describe 'start', -> 
 
-        try 
-            plex.start {}
+        it 'validates config', (wasCalled) ->
 
-        catch error
-        
-            error.should.match /plex requires opts.connect and\|or opts.listen/
-            done()
+            swap = plex.opts.validate
+            plex.opts.validate = (config) -> 
+                plex.opts.validate = swap
+                config.should.equal 'config'
+                wasCalled()
 
-    it 'throws if opts.listen.adaptor is undefined', (done) -> 
-
-        try 
-            plex.start
-                listen: {}
-
-        catch error
-
-            error.should.match /plex requires opts.listen.adaptor/
-            done()
+            plex.start 'config'
 
 
     describe 'determines mode from opts', ->
