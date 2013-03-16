@@ -41,4 +41,16 @@ require('plex').start
         port: 10002  
         # OR server: myHttpsServer
 
+
+    #
+    # define protocol
+    #
+
+    protocol: (subscribe, publish) -> 
+
+        subscribe 'event:name', (payload) -> 
+
+            publish 'event:name:ack', 'thank you :)'
+
+
 ```
