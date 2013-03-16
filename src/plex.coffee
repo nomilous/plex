@@ -2,7 +2,37 @@ Node = require './node'
 
 plex = 
 
+    #
+    # questionable as necessary?:
     supportedAdaptors: 'socket.io'
+
+
+    #
+    # **class** `plex.Node` 
+    #
+    # * Returns the [Node](node.html) class for extension
+    # * Constructor should assemble [opts](opts.html) 
+    #
+    # **Usage**
+    #
+    # <pre>
+    # plex = require 'plex'
+    #
+    # class MyNode extends plex.Node
+    #   
+    #     constructor: (args) ->
+    # 
+    #         #
+    #         # assemble @opts from args
+    #         #
+    #
+    # node = new MyNode { my: 'args' }
+    # plex.start node
+    #
+    # </pre>
+    #
+
+    Node: Node
 
     start: ( opts = {} ) -> 
 
