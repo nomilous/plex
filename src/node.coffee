@@ -1,19 +1,11 @@
 #
 # Node is the baseclass that represents the
 # running [Plex](plex.html) instance.
-# 
-# It is extended to become one of:
-# 
-# * [Root](root.html)
-# * [Proxy](proxy.html)
-# * [Leaf](leaf.html)
 #
 
 module.exports = class Node
 
     constructor: -> 
-
-        #console.log 'Node()'
 
     #
     # `node.start()` **a new instance running**
@@ -22,8 +14,6 @@ module.exports = class Node
     #
 
     start: ( opts = {} ) -> 
-
-        #console.log '\nNode().start() with:', opts
 
         context = new (require './context') opts
 
@@ -61,13 +51,6 @@ module.exports = class Node
 
 
         return context
-
-
-    #
-    # ### Private methods.
-    #
-    # In so far as thats possible.
-    # 
 
 
     #

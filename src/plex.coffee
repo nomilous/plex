@@ -1,29 +1,40 @@
+Node = require './node'
+
 plex = 
 
     supportedAdaptors: 'socket.io'
 
     start: ( opts = {} ) -> 
 
-        unless opts.mode
-            throw "plex requires mode: 'root|proxy|leaf'" 
+        unless opts.listen or opts.connect
 
-        unless opts.mode == 'leaf'
+            throw 'plex requires opts.connect and|or opts.listen'
 
-            unless opts.listen and opts.listen.adaptor
-                throw "plex requires listen.adaptor: '#{ plex.supportedAdaptors }'" 
+        for edge in ['connect', 'listen']
+
+            if opts[edge]
+
+                unless opts[edge].adaptor
+
+                    throw "plex requires opts.#{ edge }.adaptor"
+
+        if opts.listen
+
+            if opts.connect
+
+                opts.mode = 'proxy'
+        
+            else
+
+                opts.mode = 'root'
 
 
-            if opts.listen.adaptor == 'socket.io'
+         if opts.connect and not opts.mode
 
-                if opts.mode == 'root' or opts.mode == 'proxy'
+            opts.mode = 'leaf'
 
-                    unless opts.listen.port or opts.listen.server
-                    
-                        throw 'plex root|proxy with socket.io requires opts.listen.port or opts.listen.server'
 
-        server = require "./#{  opts.mode  }"
-
-        server.start opts
+        return (new Node).start opts
 
 
 module.exports = plex
