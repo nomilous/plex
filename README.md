@@ -54,3 +54,25 @@ require('plex').start
 
 
 ```
+
+
+### Usage (advanced)
+
+```coffee
+
+plex = require 'plex'
+
+class MyNode extends plex.Node
+
+    constructor: (args)
+
+        #
+        # args should assemble the 
+        # necessary @opts
+        #
+
+
+plex.start new MyNode my: 'args'
+
+```
+
