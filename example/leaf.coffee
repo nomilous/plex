@@ -4,8 +4,6 @@ plex = require '../lib/plex'
 
 plex.start
 
-    mode: 'leaf'
-
     secret: 'SEEKRIT'
     
     connect:

@@ -4,8 +4,6 @@ plex = require '../lib/plex'
 
 plex.start
 
-    mode: 'proxy'
-
     secret: 'SEEKRIT'
     
     connect:
