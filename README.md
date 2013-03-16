@@ -19,6 +19,10 @@ npm install plex --save
 
 require('plex').start
 
+    #
+    # with this opts hash/literal
+    #
+
     secret: 'SEEKRIT'
 
     connect:
@@ -68,7 +72,7 @@ class MyNode extends plex.Node
 
         #
         # constructor should assemble
-        # the necessary @opts
+        # the necessary @opts hash/literal
         #
 
 
