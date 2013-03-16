@@ -12,6 +12,7 @@
   "dependencies": {
     "socket.io": "~0.9.13",
     "socket.io-client": "~0.9.11",
+    "knax":"0.0.1",
     "inflection": "~1.2.3"
   },
   "devDependencies": {

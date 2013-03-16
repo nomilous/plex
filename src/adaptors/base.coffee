@@ -2,7 +2,7 @@
 # Base class for an Adaptor
 # 
 
-class BaseAdaptor 
+class Base
 
     constructor: (@context) ->
 
@@ -83,4 +83,4 @@ class BaseAdaptor
             @insertEdge (require '../edges/base-edge'), @context.listen.mockConnection
 
 
-module.exports = BaseAdaptor
+module.exports = Base
