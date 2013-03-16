@@ -3,7 +3,7 @@ plex   = require '../lib/plex'
 
 describe 'plex', ->
 
-    describe 'start', -> 
+    describe 'start()', -> 
 
         it 'validates config', (wasCalled) ->
 
@@ -14,6 +14,30 @@ describe 'plex', ->
                 wasCalled()
 
             plex.start 'config'
+
+
+        describe 'accepts an extended Node instance as arg1', ->
+
+            before ->
+
+                class @ExtendedNode extends plex.Node
+                    config: -> 
+                        connect: 
+                            adaptor: 'UNDEFINED_ADAPTOR'
+
+
+            it 'uses @ExtendedNode.config()', (done) ->
+
+                try
+                    
+                    plex.start new @ExtendedNode
+
+                catch error
+
+                    error.should.match /Cannot find module '\.\/edges\/UNDEFINED_ADAPTOR-edge/
+                    done()
+
+
 
 
     describe 'determines mode from opts', ->

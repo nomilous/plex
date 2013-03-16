@@ -32,6 +32,16 @@ plex =
     
     start: ( opts = {} ) -> 
 
+        if typeof opts.config != 'undefined'
+
+            node = opts
+            opts = node.config()
+
+        else
+
+            node = new Node
+
+
         plex.opts.validate opts
 
         if opts.listen
@@ -50,7 +60,7 @@ plex =
             opts.mode = 'leaf'
 
 
-        return (new Node).start opts
+        return node.start opts
 
 
     #
@@ -78,7 +88,7 @@ plex =
     #         # assemble @opts from args
     #         #
     #
-    # node = new MyNode { my: 'args' }
+    # node = new MyNode 'my', 'args'
     # plex.start node
     #
     # </pre>
