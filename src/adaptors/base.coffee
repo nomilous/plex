@@ -80,7 +80,7 @@ class Base
 
         if @context.listen.mockConnection
 
-            @insertEdge (require '../edges/base-edge'), @context.listen.mockConnection
+            @insertEdge (require '../edges/base'), @context.listen.mockConnection
 
 
 module.exports = Base

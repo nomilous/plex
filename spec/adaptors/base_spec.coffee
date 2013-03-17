@@ -24,7 +24,6 @@ describe 'Adaptor', ->
                         artist:    'Raimonds Tiguls'
                         album:     'Četri vēji'
                         track:     'Kū es biju sarēbusi'
-
                         seriously: 'its a masterpiece'
 
         catch error
@@ -69,6 +68,7 @@ describe 'Adaptor', ->
                 adaptor: {}
                 mockConnection:
                     id: 'THE_LOCAL_ID'
+                    on: ->
 
 
         new BaseAdaptor context

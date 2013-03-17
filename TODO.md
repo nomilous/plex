@@ -1,7 +1,4 @@
-Todo
-====
-
-### pending version 0.0.6
+### Todo
 
 * expand plugin to support 3rd party local override or installed module
 
@@ -21,9 +18,6 @@ Todo
 * modify proxy_reconnect / remote_edge_change to properly propagate nested changes that ocurred while the rootward link was severed such that new or departed leaves not known to the root become known (it makes sense to only propagate globalid/label/tags more than one tier rootward)
 
 * third argument to protocol to enable interaction with node context within protocol handlers
-
-
-### pending version 0.0.7
 
 * persisted messages for guaranteed delivery (to survive temporary link outages)
 * `fifo` and `lifo` modes for outage recovery sync stream 

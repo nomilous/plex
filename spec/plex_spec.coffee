@@ -34,7 +34,8 @@ describe 'plex', ->
 
                 catch error
 
-                    error.should.match /Cannot find module '\.\/edges\/UNDEFINED_ADAPTOR-edge/
+                    error.should.match /\/edges\/UNDEFINED_ADAPTOR/
+                    error.code.should.equal 'MODULE_NOT_FOUND'
                     done()
 
 

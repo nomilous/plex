@@ -4,7 +4,7 @@ os = require 'os'
 # Baseclass for an Edge
 # 
 
-class BaseEdge
+class Base
     
     #
     # An Edge has two methods of contruction
@@ -39,10 +39,8 @@ class BaseEdge
 
     assign: (@context, @connection) -> 
 
-
         subscribe = @getSubscriber()
         publish   = @getPublisher()
-
 
         subscribe 'connect', =>
 
@@ -209,4 +207,4 @@ class BaseEdge
     #     @connection.emit event, payload
 
 
-module.exports = BaseEdge
+module.exports = Base

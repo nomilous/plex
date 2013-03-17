@@ -8,7 +8,7 @@ SocketIoEdge = require '../edges/socket.io'
 
 module.exports = class SocketIo extends Base
 
-    listen: ->
+    listen: -> 
 
         #
         # Can be initialized with either a port to listen

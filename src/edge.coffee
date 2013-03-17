@@ -7,10 +7,10 @@ module.exports =
 
     connect: ( context ) -> 
 
-        klass = (require './plugin').load
+        klass = (require 'knax').load
 
-            type: 'edge'
-            name: context.connect.adaptor
+            category: 'edge'
+            class: context.connect.adaptor
 
         edge = new klass
         
