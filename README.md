@@ -3,7 +3,7 @@ plex
 
 n-tier proxy tree for nodejs<br />
 
-0.0.6 - high alpha - api changes/deprecations without warning. <br />
+0.0.7 - high alpha - api changes/deprecations without warning. <br />
 
 
 ### Install
