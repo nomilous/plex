@@ -1,5 +1,5 @@
 should      = require 'should'
-BaseAdaptor = require '../../lib/adaptors/base-adaptor'
+BaseAdaptor = require '../../lib/adaptors/base'
 Context     = require '../../lib/context'
 
 describe 'Adaptor', -> 
@@ -24,7 +24,6 @@ describe 'Adaptor', ->
                         artist:    'Raimonds Tiguls'
                         album:     'Četri vēji'
                         track:     'Kū es biju sarēbusi'
-
                         seriously: 'its a masterpiece'
 
         catch error
@@ -63,13 +62,13 @@ describe 'Adaptor', ->
     it 'stores the connecting edge instance into context.edges', (done) -> 
 
         context = new Context
-            mode: 'proxy'
             # mock
             uplink: send: ->
             listen:
                 adaptor: {}
                 mockConnection:
                     id: 'THE_LOCAL_ID'
+                    on: ->
 
 
         new BaseAdaptor context
@@ -88,7 +87,6 @@ describe 'Adaptor', ->
         sent = 'not yet'
 
         context = new Context
-            mode: 'proxy'
             globalId: -> 'override'
             # mock
             uplink: send: (event, payload) -> sent = event: event, payload: payload

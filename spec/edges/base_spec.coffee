@@ -1,5 +1,5 @@
 should = require 'should'
-Edge   = require '../../lib/edges/base-edge'
+Edge   = require '../../lib/edges/base'
 os     = require 'os'
 
 describe 'Edge', ->
@@ -48,6 +48,7 @@ describe 'Edge', ->
         sent = 1
         context = 
             mode: 'leaf'
+            secret: 'SECRET'
             globalId: -> 'GLOBAL_ID'
             connect:
                 adaptor: 'base'
@@ -79,6 +80,7 @@ describe 'Edge', ->
                 payload: 
                     mode: 'leaf', 
                     globalId: 'GLOBAL_ID'
+                    secret: 'SECRET'
 
             done()
 

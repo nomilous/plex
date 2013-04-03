@@ -1,7 +1,7 @@
 {
   "name": "plex",
   "description": "n-tier proxy tree (alpha)",
-  "version": "0.0.5",
+  "version": "0.0.8",
   "author": "nomilous <nomilous@gmail.com>",
   "contributors": [
     {
@@ -12,6 +12,7 @@
   "dependencies": {
     "socket.io": "~0.9.13",
     "socket.io-client": "~0.9.11",
+    "knax":"0.0.3",
     "inflection": "~1.2.3"
   },
   "devDependencies": {

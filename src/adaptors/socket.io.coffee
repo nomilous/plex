@@ -1,14 +1,14 @@
-BaseAdaptor  = require './base-adaptor'
+Base         = require './base'
 io           = require 'socket.io'
-SocketIoEdge = require '../edges/socket.io-edge'
+SocketIoEdge = require '../edges/socket.io'
 
 #
 # https://github.com/LearnBoost/socket.io/wiki/Exposed-events
 #
 
-module.exports = class SocketIoAdaptor extends BaseAdaptor
+module.exports = class SocketIo extends Base
 
-    listen: ->
+    listen: -> 
 
         #
         # Can be initialized with either a port to listen
@@ -58,6 +58,7 @@ module.exports = class SocketIoAdaptor extends BaseAdaptor
                 
                     @context.listen.onListen this
 
+        @server.set 'log level', @context.logLevel || 1
 
         @server.on 'connection', (socket) => 
 

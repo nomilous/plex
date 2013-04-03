@@ -1,8 +1,14 @@
-should = require 'should'
-Node   = require '../lib/node'
-Edge   = require '../lib/edge'
+should       = require 'should'
+Node         = require '../lib/node'
+Edge         = require '../lib/edge'
+EventEmitter = require('events').EventEmitter
 
 describe 'Node', -> 
+
+    it 'is an EventEmitter', (done) ->
+
+        Node.prototype.on.should.equal EventEmitter.prototype.on
+        done()
 
     it 'defines start()', (done) -> 
 

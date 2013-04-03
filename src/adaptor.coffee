@@ -7,9 +7,9 @@ module.exports =
 
     listen: ( context ) -> 
 
-        klass = (require './plugin').load
+        klass = (require 'knax').load
 
-            type: 'adaptor'
-            name: context.listen.adaptor
+            category: 'adaptor'
+            class: context.listen.adaptor
 
         return new klass context

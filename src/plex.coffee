@@ -1,29 +1,113 @@
+Node = require './node'
+opts = require './opts'
+
 plex = 
 
-    supportedAdaptors: 'socket.io'
+    #
+    # **function** `plex.start` 
+    #
+    # * Starts the server
+    #
+    # *Usage*
+    #
+    # <pre>
+    # plex = require 'plex'
+    #
+    # plex.start
+    # 
+    #    secret: 'SEEKRIT'
+    # 
+    #    connect:
+    #       adaptor: 'socket.io'
+    #       uri: 'http://rootward.proxy:3000'
+    # 
+    #    listen:
+    #       # listen for leaves/childProxies
+    #       adaptor: 'socket.io'
+    #       port: 12340
+    #    
+    # </pre>
+    #
 
+    
     start: ( opts = {} ) -> 
 
-        unless opts.mode
-            throw "plex requires mode: 'root|proxy|leaf'" 
+        if typeof opts.config != 'undefined'
 
-        unless opts.mode == 'leaf'
+            node = opts
+            opts = node.config()
 
-            unless opts.listen and opts.listen.adaptor
-                throw "plex requires listen.adaptor: '#{ plex.supportedAdaptors }'" 
+        else
+
+            node = new Node
 
 
-            if opts.listen.adaptor == 'socket.io'
+        plex.opts.validate opts
 
-                if opts.mode == 'root' or opts.mode == 'proxy'
+        if opts.listen
 
-                    unless opts.listen.port or opts.listen.server
-                    
-                        throw 'plex root|proxy with socket.io requires opts.listen.port or opts.listen.server'
+            if opts.connect
 
-        server = require "./#{  opts.mode  }"
+                opts.mode = 'proxy'
+        
+            else
 
-        server.start opts
+                opts.mode = 'root'
+
+
+         if opts.connect and not opts.mode
+
+            opts.mode = 'leaf'
+
+
+        return node.start opts
+
+
+    #
+    # questionable as necessary?:
+    supportedAdaptors: 'socket.io'
+
+
+    #
+    # **class** `plex.Node` 
+    #
+    # * Returns the [Node](node.html) class for extension
+    # * Constructor should assemble [opts](opts.html) 
+    #
+    #
+    # *Usage*
+    #
+    # <pre>
+    # plex = require 'plex'
+    #
+    # class MyNode extends plex.Node
+    #   
+    #     constructor: (args) ->
+    # 
+    #         #
+    #         # assemble @opts from args
+    #         #
+    #
+    # node = new MyNode 'my', 'args'
+    # context = plex.start node
+    #
+    # </pre>
+    #
+    # see [Context](context.html)
+    # 
+
+    Node: Node
+
+
+    #
+    # **literal** `plex.opts`
+    # 
+    # * Returns [opts](opts.html) object literal
+    # 
+    # 
+
+    opts: opts
+
 
 
 module.exports = plex

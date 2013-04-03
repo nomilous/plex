@@ -4,7 +4,7 @@ os = require 'os'
 # Baseclass for an Edge
 # 
 
-class BaseEdge
+class Base
     
     #
     # An Edge has two methods of contruction
@@ -39,10 +39,8 @@ class BaseEdge
 
     assign: (@context, @connection) -> 
 
-
         subscribe = @getSubscriber()
         publish   = @getPublisher()
-
 
         subscribe 'connect', =>
 
@@ -75,6 +73,16 @@ class BaseEdge
             #
 
             @context.tree.insertLocal this, payload
+
+            if @context.secret
+
+                if payload.secret != @context.secret
+
+                    @connection.disconnect()
+
+                    #
+                    # TODO: clean up rejected connection
+                    #
 
 
         subscribe 'event:edge:connect', (payload) => 
@@ -118,6 +126,7 @@ class BaseEdge
         @getPublisher() 'event:connect',
             mode: @context.mode
             globalId: @context.globalId()
+            secret: @context.secret
 
 
     #
@@ -148,7 +157,9 @@ class BaseEdge
 
         return (event, payload) => 
 
-            console.log 'SENT %s - %s', event, JSON.stringify payload
+            if @context.logLevel > 0
+
+                console.log 'SENT %s - %s', event, JSON.stringify payload
 
             @connection.emit.call @connection, event, payload
 
@@ -198,4 +209,4 @@ class BaseEdge
     #     @connection.emit event, payload
 
 
-module.exports = BaseEdge
+module.exports = Base

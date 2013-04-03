@@ -1,8 +1,10 @@
+#!/usr/bin/env coffee
+
 plex = require '../lib/plex'
 
 plex.start
 
-    mode: 'root'
+    secret: 'SEEKRIT'
 
     onChange:
         localEdge: (context, edge) -> 

@@ -1,11 +1,11 @@
 should = require 'should'
-edges  = require '../lib/edge'
+edge   = require '../lib/edge'
 
 describe 'edge', -> 
 
     it '.connect() returns a connected edge', (done) -> 
 
-        edges.connect(
+        edge.connect(
 
             connect:
                 adaptor: 'base'
