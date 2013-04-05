@@ -54,6 +54,9 @@ module.exports = class Context extends require('events').EventEmitter
         "#{ os.hostname() }%#{ process.pid }"
 
 
+    stop: ->
 
+        console.log 'TODO: clean stop plex'
+        process.exit 0
 
 

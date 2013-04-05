@@ -49,8 +49,6 @@ module.exports = class Node extends require('./context')
 
         context.uplink = @connect context if opts.connect
 
-
-
         return context
 
 
