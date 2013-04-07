@@ -25,7 +25,7 @@ class Base
         throw 'undefined context' unless context
 
         unless context.connect and context.connect.adaptor
-            
+
             throw 'edge requires connect.adaptor'
 
 
@@ -141,7 +141,21 @@ class Base
 
     getSubscriber: -> 
 
+        localId = @localId()
+
         return (event, callback) => 
+
+            @connection.on.call @connection, event, => 
+
+                payload = arguments
+
+                @context.logger.log
+
+                    verbose: -> 'receive message':
+
+                        localId: localId
+                        event: event
+                        payload: payload
 
             @connection.on.call @connection, event, callback
 
@@ -155,11 +169,17 @@ class Base
 
     getPublisher: -> 
 
+        localId = @localId()
+
         return (event, payload) => 
 
-            if @context.logLevel > 0
+            @context.logger.log 
 
-                console.log 'SENT %s - %s', event, JSON.stringify payload
+                verbose: -> 'send message':
+
+                    localId: localId
+                    event: event
+                    payload: payload
 
             @connection.emit.call @connection, event, payload
 

@@ -17,6 +17,14 @@ module.exports = class Node extends require('./context')
 
         context = new (require './context') opts
 
+        context.logger.log
+
+            info:    -> 'starting plex'
+            verbose: -> 'starting plex': 
+
+                connect: opts.connect
+                listen: opts.listen
+
 
         # 
         # **To configure the node to listen**

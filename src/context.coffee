@@ -27,7 +27,27 @@ module.exports = class Context extends require('events').EventEmitter
     
         @tree = new (require './tree') this
 
+        unless @logger
 
+            @logger = 
+
+                #
+                # todo: default logger from nezcore:logger
+                #
+
+                log: (messages) -> 
+
+                    for level of messages
+
+                        logdata = messages[level]()
+
+                        if typeof logdata == 'string'
+
+                             console.log '%s: %s', level, logdata
+                        
+                        else 
+
+                            console.log '%s: %s', level, JSON.stringify logdata
 
 
         @edges = {}
