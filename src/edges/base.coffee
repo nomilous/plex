@@ -149,13 +149,15 @@ class Base
 
                 payload = arguments
 
-                @context.logger.log
+                if @context.logger
+                
+                    @context.logger.log
 
-                    verbose: -> 'receive message':
+                        verbose: -> 'receive message':
 
-                        localId: localId
-                        event: event
-                        payload: payload
+                            localId: localId
+                            event: event
+                            payload: payload
 
             @connection.on.call @connection, event, callback
 
@@ -173,13 +175,15 @@ class Base
 
         return (event, payload) => 
 
-            @context.logger.log 
+            if @context.logger 
 
-                verbose: -> 'send message':
+                @context.logger.log 
 
-                    localId: localId
-                    event: event
-                    payload: payload
+                    verbose: -> 'send message':
+
+                        localId: localId
+                        event: event
+                        payload: payload
 
             @connection.emit.call @connection, event, payload
 
